@@ -19,10 +19,10 @@ import NavigationBar from '../../components/NavigationBar/NavigationBar';
  */
 const uiMetadata = {
   moduleName: 'playground',
-  uiKey: 'u7e7c13a017',
+  uiKey: 'u4u4u4u4u4u',
 };
 
-const SampleDefinition = ({ close, isBpm, Id, ...rest }) => {
+const TicketDefinition = ({ close, isBpm, Id, ...rest }) => {
   const { translate } = useTranslation();
   const { tenant, user } = useAuthenticationContext();
   const { enqueueSnackbar } = useSnackbar();
@@ -177,4 +177,4 @@ const SampleDefinition = ({ close, isBpm, Id, ...rest }) => {
   );
 };
 
-export default withFormPage(SampleDefinition, { uiMetadata });
+export default withFormPage(TicketDefinition, { uiMetadata });

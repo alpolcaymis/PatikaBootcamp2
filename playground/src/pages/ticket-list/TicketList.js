@@ -11,7 +11,7 @@ import {
 } from 'component/base';
 import { Card, DataGrid, Filter, Input, BasePage, withFormPage } from 'component/ui';
 
-import SampleDefinition from '../sample-definition';
+import TicketDefinition from '../ticket-definition/TicketDefinition';
 import { apiUrls } from '../../constants';
 import NavigationBar from '../../components/NavigationBar/NavigationBar';
 
@@ -20,10 +20,10 @@ import NavigationBar from '../../components/NavigationBar/NavigationBar';
  */
 const uiMetadata = {
   moduleName: 'playground',
-  uiKey: 'u24bddfade6',
+  uiKey: 'u5u5u5u5u5u',
 };
 
-const SampleList = (props) => {
+const TicketList = (props) => {
   const { enqueueSnackbar } = useSnackbar();
   const { tenant } = useAuthenticationContext();
   const { showDialog } = useFormManagerContext();
@@ -83,7 +83,7 @@ const SampleList = (props) => {
   const addClicked = useCallback(() => {
     showDialog({
       title: translate('Sample add'),
-      content: <SampleDefinition />,
+      content: <TicketDefinition />,
       callback: (data) => {
         if (data) {
           getDataSource();
@@ -96,7 +96,7 @@ const SampleList = (props) => {
     data &&
       showDialog({
         title: translate('Sample edit'),
-        content: <SampleDefinition data={data} />,
+        content: <TicketDefinition data={data} />,
         callback: () => {
           getDataSource();
         },
@@ -153,6 +153,6 @@ const SampleList = (props) => {
     </BasePage>
   );
 };
-SampleList.displayName = 'SampleList';
+TicketList.displayName = 'TicketList';
 
-export default withFormPage(SampleList, { uiMetadata });
+export default withFormPage(TicketList, { uiMetadata });
