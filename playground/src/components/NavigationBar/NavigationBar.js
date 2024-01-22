@@ -9,12 +9,12 @@ function NavigationBar() {
         <li>
           <Link to="/playground/adana-page">AdanaPage</Link>
         </li>
-        <li>
+        {/* <li>
           <Link to="/playground/sample-definition">Sample Definition</Link>
         </li>
         <li>
           <Link to="/playground/sample-list">SampleList</Link>
-        </li>
+        </li> */}
         <li>
           <Link to="/playground/tickets">Tickets</Link>
         </li>

@@ -1,0 +1,7 @@
+.ticketItem {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid salmon;
+  padding: 0.5rem;
+  margin: 0.5rem;
+}

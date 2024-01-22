@@ -42,6 +42,13 @@ export default [
   {
     name: 'AdanaPage',
     module: '/playground',
+    path: '/tickets/:id',
+    component: AdanaPage,
+    uiKey: 'u1u1u1u1u1u',
+  },
+  {
+    name: 'AdanaPage',
+    module: '/playground',
     path: '/adana-page',
     component: AdanaPage,
     uiKey: 'u1u1u1u1u1u',
