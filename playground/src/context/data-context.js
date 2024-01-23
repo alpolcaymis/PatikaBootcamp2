@@ -39,6 +39,7 @@ export const DataContextProvider = ({ children }) => {
     <DataContext.Provider
       value={{
         tickets,
+        setTickets,
         handleDeleteTicket,
       }}
     >

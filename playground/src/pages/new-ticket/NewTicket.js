@@ -15,6 +15,7 @@ import { withPage } from 'component/ui';
 import NavigationBar from '../../components/NavigationBar/NavigationBar';
 import { useHistory } from 'react-router-dom';
 import { Button, Box, GetIcon } from 'component/ui';
+import { useDataContext } from '../../context/data-context';
 
 const uiMetadata = {
   moduleName: 'playground',
@@ -22,32 +23,100 @@ const uiMetadata = {
 };
 
 function NewTicket() {
+  const { tickets, setTickets } = useDataContext();
+
+  const { translate } = useTranslation();
   const [dataModel, setDataModel] = useState({});
 
+  const nameRef = useRef();
+  const requestTypeRef = useRef();
+  const requestMessageRef = useRef();
+  const isActiveRef = useRef(false);
+
   const history = useHistory();
+
+  const handleSubmit = () => {
+    console.log(nameRef.current.value, requestTypeRef.current.value, requestMessageRef.current.value);
+    handleAddTicket();
+  };
 
   const handleClick = () => {
     // Navigate to a different route programmatically
     history.push('/playground/tickets');
   };
 
-  // const handleAddDrink = () => {
-  //   setDrinks([
-  //     ...drinks,
-  //     {
-  //       id: generateCustomId(),
-  //       type: "beer",
-  //       amount: "",
-  //       volume: "",
-  //       percentage: "",
-  //     },
-  //   ]);
-  // };
+  const generateCustomId = () => {
+    const random = Math.floor(Math.random() * 1000000);
+    return random;
+  };
+  const generateTimestamp = () => {
+    const timestamp = new Date().getTime();
+    // Create a new Date object with the timestamp
+    var date = new Date(timestamp);
+
+    // Extract the components of the date
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var seconds = date.getSeconds();
+
+    // Format the components as a string
+    var formattedDateTime = day + '-' + month + '-' + year + ' ' + hours + ':' + minutes + ':' + seconds;
+
+    // Log or use the formatted date and time
+    console.log(formattedDateTime);
+    return formattedDateTime;
+  };
+
+  const handleAddTicket = () => {
+    setTickets([
+      ...tickets,
+      {
+        id: generateCustomId(),
+        date: generateTimestamp(),
+        name: nameRef.current.value,
+        requestType: requestTypeRef.current.value,
+        requestMessage: requestMessageRef.current.value,
+        status: 'new',
+        note: 'not answered',
+      },
+    ]);
+  };
 
   return (
     <>
       <h1>NewTicket</h1>
       <NavigationBar />
+      <Card>
+        <Input xs={6} required ref={nameRef} label={translate('Name')} />
+        <Select
+          datasource={[
+            {
+              label: 'Problem',
+              value: 'Problem',
+            },
+            {
+              label: 'Help',
+              value: 'Help',
+            },
+            {
+              label: 'Suggestion',
+              value: 'Suggestion',
+            },
+          ]}
+          label="Select Component"
+          name="Select"
+          onChange={function noRefCheck() {}}
+          value
+          ref={requestTypeRef}
+          xs={6}
+        />
+        <Input xs={12} required ref={requestMessageRef} rows={3} multiline label="Request Message" />
+      </Card>
+      <button onClick={handleSubmit}>Submit</button>
+
       <Box>
         <Button
           component="label"
