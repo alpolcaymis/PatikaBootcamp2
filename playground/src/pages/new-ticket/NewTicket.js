@@ -11,7 +11,7 @@ import {
 } from 'component/base';
 import { BasePage, Card, Checkbox, Input, Select, SelectEnum, DatePicker, withFormPage } from 'component/ui';
 
-import { withPage } from 'component/ui';
+import { withPage, PageHeader } from 'component/ui';
 import NavigationBar from '../../components/NavigationBar/NavigationBar';
 import { useHistory } from 'react-router-dom';
 import { Button, Box, GetIcon } from 'component/ui';
@@ -87,7 +87,9 @@ function NewTicket() {
 
   return (
     <>
+      <PageHeader title="NewTicket" />
       <h1>NewTicket</h1>
+
       <NavigationBar />
       <Card>
         <Input xs={6} required ref={nameRef} label={translate('Name')} />

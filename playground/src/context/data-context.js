@@ -29,10 +29,14 @@ const initialTickets = [
 
 export const DataContextProvider = ({ children }) => {
   const [tickets, setTickets] = useState(initialTickets);
+  const [foundTicket, setFoundTicket] = useState({}); //It actually an object, not array. Rename it.
 
   const handleDeleteTicket = (id) => {
     const updatedTickets = tickets.filter((ticket) => ticket.id !== id);
     setTickets(updatedTickets);
+  };
+  const findInTickets = (ticketID) => {
+    setFoundTicket(tickets.find((item) => item.id == ticketID));
   };
 
   return (
@@ -41,6 +45,8 @@ export const DataContextProvider = ({ children }) => {
         tickets,
         setTickets,
         handleDeleteTicket,
+        findInTickets,
+        foundTicket,
       }}
     >
       {children}

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-
 import NavigationBar from '../../components/NavigationBar/NavigationBar';
 import Spinner from '../../components/Spinner/Spinner';
-import { withPage } from 'component/ui';
+import { withPage, PageHeader } from 'component/ui';
 
 import { useParams } from 'react-router-dom';
+import { useDataContext } from '../../context/data-context';
 
 const uiMetadata = {
   moduleName: 'playground',
@@ -14,22 +14,26 @@ function TicketPage() {
   const [loading, setLoading] = useState(false);
   const params = useParams();
 
-  // useEffect(() => {
-  //   // setLoading(true);
-  //   const fetchTicket = async () => {
-  //     const ticket = ticketFinder(ticketId);
+  const { tickets, setTickets, findInTickets, foundTicket } = useDataContext();
 
-  //     if (ticket) {
-  //       setTicket(ticket);
-  //       console.log('1 if case');
-  //       setLoading(false);
-  //     } else {
-  //       setLoading(false);
-  //       console.log('2 else case');
-  //     }
-  //   };
-  //   fetchTicket();
-  // }, [params.ticketId]);
+  useEffect(() => {
+    findInTickets(params.ticketId);
+    // setLoading(true);
+    // const fetchTicket = async () => {
+    //   const ticket = findInTickets(params.ticketId);
+    //   if (ticket) {
+    //     setTicket(ticket);
+    //     console.log('1 if case');
+    //     setLoading(false);
+    //   } else {
+    //     setLoading(false);
+    //     console.log('2 else case');
+    //   }
+    //   console.log('ticket useEffect: ', ticket);
+    //   console.log('findInTickets useEffect', findInTickets);
+    // };
+    // fetchTicket();
+  }, [params.ticketId]);
 
   if (loading) {
     return <Spinner />;
@@ -47,11 +51,19 @@ function TicketPage() {
 
   return (
     <>
+      <PageHeader title="TicketPage" />
       <h1>TicketPage</h1>
-      <p>{params.ticketId}</p>
+      <p>{('params.ticketId : ', params.ticketId)}</p>
+      {foundTicket && console.log('foundTicket:', foundTicket)}
+      <button
+        onClick={() => {
+          findInTickets(params.ticketId);
+        }}
+      >
+        Find Ticket
+      </button>
 
       <NavigationBar />
-
       {/* <div className="ticket-desc">
         <h3>Note</h3>
         <textarea ref={NoteTextArea} name="" id="" cols="40" rows="6" placeholder={ticket.note}></textarea>

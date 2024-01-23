@@ -12,7 +12,7 @@ function TicketItem({ id, date, name, status, note }) {
       <div>{name}</div>
       <div>{status}</div>
       <div>{note}</div>
-      <Link to={`/playground/tickets/${id}`}>View</Link>
+      <Link to={`/playground/ticket-page/${id}`}>View</Link>
       <button onClick={() => handleDeleteTicket(id)}>Delete</button>
     </li>
   );
