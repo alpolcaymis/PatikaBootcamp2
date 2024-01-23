@@ -28,7 +28,7 @@ function NavigationBar() {
           <Link to="/playground/ticket-list">Ticket List</Link>
         </li>
         <li>
-          <Link to="/playground/ticket-page/sadas">Ticket Page</Link>
+          <Link to="/playground/ticket-page/123">Ticket Page</Link>
         </li>
       </ul>
     </nav>
