@@ -9,6 +9,7 @@ const Tickets = lazy(() => import('./pages/tickets/Tickets'));
 const NewTicket = lazy(() => import('./pages/new-ticket/NewTicket'));
 const TicketDefinition = lazy(() => import('./pages/ticket-definition/TicketDefinition'));
 const TicketList = lazy(() => import('./pages/ticket-list/TicketList'));
+const TicketPage = lazy(() => import('./pages/ticket-page/TicketPage'));
 
 export default [
   {
@@ -66,6 +67,13 @@ export default [
     path: '/new-ticket',
     component: NewTicket,
     uiKey: 'u3u3u3u3u3u',
+  },
+  {
+    name: 'TicketPage',
+    module: '/playground',
+    path: '/ticket-page/:ticketId',
+    component: TicketPage,
+    uiKey: 'u6u6u6u6u6u',
   },
   {
     name: 'NotFound',
