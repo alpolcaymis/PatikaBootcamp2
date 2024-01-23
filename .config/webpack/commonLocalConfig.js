@@ -18,21 +18,21 @@ module.exports = function (moduleName, env) {
       disableHostCheck: true,
       headers: {
         /** Dev */
-        'Content-Security-Policy': `default-src https://*.fimple.co.uk wss://*.fimple.co.uk http://*.localhost:* http://localhost:* ws://localhost:* blob: data: 'unsafe-eval';font-src 'self' https://*.fimple.co.uk http://*.localhost:* http://localhost:* data:;style-src 'self' https://*.fimple.co.uk http://*.localhost:* http://localhost:* 'unsafe-inline';`,
-        "Access-Control-Allow-Origin": "*",
+        // ALP
+        // 'Content-Security-Policy': `default-src https://*.fimple.co.uk wss://*.fimple.co.uk http://*.localhost:* http://localhost:* ws://localhost:* blob: data: 'unsafe-eval';font-src 'self' https://*.fimple.co.uk http://*.localhost:* http://localhost:* data:;style-src 'self' https://*.fimple.co.uk http://*.localhost:* http://localhost:* 'unsafe-inline';`,
+        // "Access-Control-Allow-Origin": "*",
         // 'Content-Security-Policy': `
         //   default-src https://*.fimple.co.uk wss://*.fimple.co.uk 'unsafe-eval'; font-src 'self' https://*.fimple.co.uk data:;style-src 'self' https://*.fimple.co.uk 'unsafe-inline'; img-src 'self' https://*.fimple.co.uk data:;
         //   style-src 'unsafe-inline';
         //   img-src 'self' data:;
         // `,
-
         /** Prod */
         // 'Content-Security-Policy': `
         //   default-src https://*.fimple.co.uk wss://*.fimple.co.uk 'unsafe-eval'; font-src 'self' https://*.fimple.co.uk data:;style-src 'self' https://*.fimple.co.uk 'unsafe-inline'; img-src 'self' https://*.fimple.co.uk data:;
         //   style-src 'unsafe-inline';
         //   img-src 'self' data:;
         // `,
-      }
+      },
     },
     module: {
       rules: [
@@ -45,7 +45,7 @@ module.exports = function (moduleName, env) {
               presets: ['@babel/preset-react', '@babel/preset-env'],
               plugins: ['@babel/plugin-transform-runtime'],
             },
-          }
+          },
         },
         {
           test: /\.(png|jpe?g|gif)$/i,
@@ -54,16 +54,16 @@ module.exports = function (moduleName, env) {
         {
           test: /\.bpmn|\.dmn$/,
           use: {
-            loader: 'raw-loader'
-          }
+            loader: 'raw-loader',
+          },
         },
         {
           test: /\.bpmnlintrc$/,
           use: [
             {
               loader: 'bpmnlint-loader',
-            }
-          ]
+            },
+          ],
         },
         {
           test: /\.scss|\.css$/,
@@ -76,13 +76,27 @@ module.exports = function (moduleName, env) {
               loader: 'file-loader',
               options: {
                 name: '[name].[ext]',
-                outputPath: 'fonts/'
-              }
-            }
-          ]
+                outputPath: 'fonts/',
+              },
+            },
+          ],
         },
         {
-          test: [/\.wexbim$/, /\.jpg$/, /\.docx$/, /\.csv$/, /\.mp4$/, /\.xlsx$/, /\.doc$/, /\.avi$/, /\.webm$/, /\.mov$/, /\.mp3$/, /\.rtf$/, /\.pdf$/],
+          test: [
+            /\.wexbim$/,
+            /\.jpg$/,
+            /\.docx$/,
+            /\.csv$/,
+            /\.mp4$/,
+            /\.xlsx$/,
+            /\.doc$/,
+            /\.avi$/,
+            /\.webm$/,
+            /\.mov$/,
+            /\.mp3$/,
+            /\.rtf$/,
+            /\.pdf$/,
+          ],
           loader: 'file-loader',
         },
         {
@@ -97,6 +111,6 @@ module.exports = function (moduleName, env) {
         'process.env.LOCAL_RUN': true,
         'process.env.WEB_DOMAIN': JSON.stringify(process.env.WEB_DOMAIN),
       }),
-    ]
+    ],
   };
 };
