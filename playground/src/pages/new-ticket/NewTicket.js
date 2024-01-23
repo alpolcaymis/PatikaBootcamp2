@@ -86,10 +86,7 @@ function NewTicket() {
   };
 
   return (
-    <>
-      <PageHeader title="NewTicket" />
-      <h1>NewTicket</h1>
-
+    <BasePage title="TicketPage">
       <NavigationBar />
       <Card>
         <Input xs={6} required ref={nameRef} label={translate('Name')} />
@@ -139,7 +136,7 @@ function NewTicket() {
       <Button secondary variant="contained" xs={8} onClick={handleClick}>
         Go to Tickets
       </Button>
-    </>
+    </BasePage>
   );
 }
 

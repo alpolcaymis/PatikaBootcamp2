@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import NavigationBar from '../../components/NavigationBar/NavigationBar';
 import Spinner from '../../components/Spinner/Spinner';
-import { withPage, PageHeader } from 'component/ui';
+import { withPage, PageHeader, BasePage } from 'component/ui';
 
 import { useParams } from 'react-router-dom';
 import { useDataContext } from '../../context/data-context';
@@ -15,6 +15,8 @@ function TicketPage() {
   const params = useParams();
 
   const { tickets, setTickets, findInTickets, foundTicket } = useDataContext();
+
+  const NoteTextArea = useRef();
 
   useEffect(() => {
     findInTickets(params.ticketId);
@@ -50,11 +52,22 @@ function TicketPage() {
   // };
 
   return (
-    <>
-      <PageHeader title="TicketPage" />
-      <h1>TicketPage</h1>
+    <BasePage title="TicketPage">
       <p>{('params.ticketId : ', params.ticketId)}</p>
       {foundTicket && console.log('foundTicket:', foundTicket)}
+      {/* {foundTicket && (
+        <>
+          <h3>Name: {foundTicket.name}</h3>
+          <h3>Request Type : {foundTicket.requestType}</h3>
+          <h3>Request Message : {foundTicket.requestMessage}</h3>
+          <h3>Status : {foundTicket.status}</h3>
+
+          <div className="foundTicket-desc">
+            <h3>Note</h3>
+            <textarea ref={NoteTextArea} name="" id="" cols="40" rows="6" placeholder={foundTicket.note}></textarea>
+          </div>
+        </>
+      )} */}
       <button
         onClick={() => {
           findInTickets(params.ticketId);
@@ -64,11 +77,16 @@ function TicketPage() {
       </button>
 
       <NavigationBar />
-      {/* <div className="ticket-desc">
+      <h3>Name: {foundTicket.name}</h3>
+      <h3>Request Type : {foundTicket.requestType}</h3>
+      <h3>Request Message : {foundTicket.requestMessage}</h3>
+      <h3>Status : {foundTicket.status}</h3>
+
+      <div className="foundTicket-desc">
         <h3>Note</h3>
-        <textarea ref={NoteTextArea} name="" id="" cols="40" rows="6" placeholder={ticket.note}></textarea>
-      </div> */}
-    </>
+        <textarea ref={NoteTextArea} name="" id="" cols="40" rows="6" placeholder={foundTicket.note}></textarea>
+      </div>
+    </BasePage>
   );
 }
 

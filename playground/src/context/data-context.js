@@ -9,6 +9,8 @@ const initialTickets = [
     date: '22/01/2024',
     name: 'Adana',
     status: 'new',
+    requestType: 'Problem',
+    requestMessage: "Skype doesn't work!",
     note: 'message',
   },
   {
@@ -16,6 +18,8 @@ const initialTickets = [
     date: '22/01/2024',
     name: 'Bursa',
     status: 'new',
+    requestType: 'Problem',
+    requestMessage: "Skype doesn't work!",
     note: 'message',
   },
   {
@@ -23,6 +27,8 @@ const initialTickets = [
     date: '22/01/2024',
     name: 'Ceyhan',
     status: 'closed',
+    requestType: 'Problem',
+    requestMessage: "Skype doesn't work!",
     note: 'message',
   },
 ];
