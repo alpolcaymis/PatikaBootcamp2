@@ -2,7 +2,7 @@ import React from 'react';
 import { withPage } from 'component/ui';
 import NavigationBar from '../../components/NavigationBar/NavigationBar';
 import { useHistory } from 'react-router-dom';
-import { Button } from 'component/ui';
+import { Button, Box } from 'component/ui';
 
 const uiMetadata = {
   moduleName: 'playground',
@@ -20,6 +20,23 @@ function NewTicket() {
     <>
       <h1>NewTicket</h1>
       <NavigationBar />
+      <Box>
+        <Button
+          component="label"
+          variant="outlined"
+          startIcon={<GetIcon icon={'import'} />}
+          sx={{ marginRight: '1rem' }}
+        >
+          {'Icon upload'}
+          <input
+            type="file"
+            name="fileIcon"
+            hidden
+            //onChange={handleUpload.bind(this, 'Icon')}
+            accept="image/png"
+          />
+        </Button>
+      </Box>
       <Button secondary variant="contained" xs={8} onClick={handleClick}>
         Go to Tickets
       </Button>

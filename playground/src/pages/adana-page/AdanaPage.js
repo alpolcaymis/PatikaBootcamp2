@@ -42,7 +42,6 @@ function AdanaPage() {
       <Link hoverNoneUnderline uiKey={'u5u5u5u5u5u'}>
         TicketList-Link(component/ui)
       </Link>
-
       <NavigationBar />
 
       <Breadcrumbs
