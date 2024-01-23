@@ -2,7 +2,7 @@ import React from 'react';
 import { withPage } from 'component/ui';
 import NavigationBar from '../../components/NavigationBar/NavigationBar';
 import { useHistory } from 'react-router-dom';
-import { Button, Box } from 'component/ui';
+import { Button, Box, GetIcon } from 'component/ui';
 
 const uiMetadata = {
   moduleName: 'playground',

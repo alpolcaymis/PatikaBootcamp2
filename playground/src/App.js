@@ -5,15 +5,18 @@ import moduleInfo from './moduleInfo';
 import routes from './routes';
 
 const className = moduleInfo.name;
+import { DataContextProvider } from './context/data-context';
 
 export default (params) => {
   return (
-    <AppProvider
-      {...{
-        ...params,
-        routes,
-        className,
-      }}
-    />
+    <DataContextProvider>
+      <AppProvider
+        {...{
+          ...params,
+          routes,
+          className,
+        }}
+      />
+    </DataContextProvider>
   );
 };

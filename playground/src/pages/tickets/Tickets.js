@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { withPage, DataGrid, Card } from 'component/ui';
 
 import { scopeKeys } from 'component/base';
+import { useDataContext } from '../../context/data-context';
 
 const uiMetadata = {
   moduleName: 'playground',
@@ -63,6 +64,8 @@ const initialDataSource = [
 ];
 
 function Tickets() {
+  const { isLoggedIn } = useCartContext();
+
   const [ticketsArray, setTicketsArray] = useState(initialTicketsArray);
 
   const [dataSource, setDataSource] = useState(initialDataSource);
