@@ -19,23 +19,15 @@ function TicketPage() {
 
   const urlTicketId = Number(params.ticketId);
 
-  const { tickets, setTickets, handleTicketStatusChange, findInTickets, foundTicket } = useDataContext();
+  const { handleTicketStatusChange, handleInputChange, findInTickets, foundTicket } = useDataContext();
 
   const textAreaRef = useRef();
 
-  const save = () => {
-    foundTicket.note = textAreaRef.current.value;
-    // foundTicket.category = inputRef.current.value;
-  };
   const closeTicket = () => {
-    foundTicket.note = textAreaRef.current.value;
-    foundTicket.status = 'closed';
+    handleInputChange(urlTicketId, 'status', 'closed');
     history.push('/playground/tickets');
   };
 
-  // useEffect(() => {
-  //   findInTickets(urlTicketId);
-  // }, [urlTicketId, foundTicket]);
   findInTickets(urlTicketId);
 
   if (loading) {
@@ -63,8 +55,8 @@ function TicketPage() {
 
       <select
         id={`status-${urlTicketId}`}
-        defaultValue={foundTicket.status}
         onChange={(e) => handleTicketStatusChange(Number(urlTicketId), e.target.value)}
+        value={foundTicket.status}
         required
       >
         <option value="new">new</option>
@@ -78,16 +70,15 @@ function TicketPage() {
         <textarea
           ref={textAreaRef}
           name=""
-          id=""
+          id={`note-${urlTicketId}`}
           cols="40"
           rows="6"
-          placeholder={'empty'}
-          defaultValue={foundTicket.note}
-          onBlur={() => save()}
+          value={foundTicket.note}
+          onChange={(e) => handleInputChange(urlTicketId, 'note', e.target.value)}
+          // onBlur={(e) => handleInputChange(urlTicketId, 'note', e.target.value)}
         ></textarea>
       </div>
 
-      <button onClick={() => save()}>Save</button>
       <button onClick={() => closeTicket()}>Save & Close Ticket</button>
     </BasePage>
   );

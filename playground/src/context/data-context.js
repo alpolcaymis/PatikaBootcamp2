@@ -3,6 +3,7 @@ import { createContext, useState, useContext } from 'react';
 export const DataContext = createContext();
 export const useDataContext = () => useContext(DataContext);
 
+// import { DUMMY_DATA as initialTickets } from '../dummy-data.js';
 const initialTickets = [
   {
     id: 123,
@@ -60,6 +61,16 @@ export const DataContextProvider = ({ children }) => {
     setTickets(updatedTickets);
   };
 
+  const handleInputChange = (id, fieldName, value) => {
+    const updatedTickets = tickets.map((ticket) => {
+      if (ticket.id === id) {
+        return { ...ticket, [fieldName]: value };
+      }
+      return ticket;
+    });
+    setTickets(updatedTickets);
+  };
+
   return (
     <DataContext.Provider
       value={{
@@ -67,6 +78,7 @@ export const DataContextProvider = ({ children }) => {
         setTickets,
         handleAddTicket,
         handleTicketStatusChange,
+        handleInputChange,
         handleDeleteTicket,
         findInTickets,
         foundTicket,
