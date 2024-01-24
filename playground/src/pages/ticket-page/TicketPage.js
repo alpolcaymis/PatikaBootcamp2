@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import NavigationBar from '../../components/NavigationBar/NavigationBar';
 import Spinner from '../../components/Spinner/Spinner';
-import { withPage, PageHeader, BasePage } from 'component/ui';
+import { withPage, PageHeader, ActionBar, Card, InformationGrid, Grid, Select, BasePage } from 'component/ui';
 import { useHistory } from 'react-router-dom';
 
 import { useParams } from 'react-router-dom';
@@ -36,23 +36,12 @@ function TicketPage() {
 
   return (
     <BasePage title="TicketPage">
-      <p>{('urlTicketId : ', urlTicketId)}</p>
-      {foundTicket && console.log('foundTicket:', foundTicket)}
-
-      <button
-        onClick={() => {
-          findInTickets(urlTicketId);
-        }}
-      >
-        Find Ticket
-      </button>
-
       <NavigationBar />
+
       <h3>Name: {foundTicket.name}</h3>
       <h3>Request Type : {foundTicket.requestType}</h3>
       <h3>Request Message : {foundTicket.requestMessage}</h3>
       <h3>Status : {foundTicket.status}</h3>
-
       <select
         id={`status-${urlTicketId}`}
         onChange={(e) => handleTicketStatusChange(Number(urlTicketId), e.target.value)}
