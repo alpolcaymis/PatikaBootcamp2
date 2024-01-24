@@ -3,12 +3,14 @@ import NavigationBar from '../../components/NavigationBar/NavigationBar';
 import { Link } from 'react-router-dom';
 import { withPage, DataGrid, Card, BasePage } from 'component/ui';
 import { useTranslation, useFormManagerContext, scopeKeys } from 'component/base';
+import { useHistory } from 'react-router-dom';
 
 import TicketItem from '../../components/TicketItem/TicketItem';
 
 import { useDataContext } from '../../context/data-context';
 
 import TicketDefinition from '../ticket-definition/TicketDefinition';
+import TicketPage from '../ticket-page/TicketPage';
 
 const uiMetadata = {
   moduleName: 'playground',
@@ -17,48 +19,18 @@ const uiMetadata = {
 
 function Tickets() {
   const { translate } = useTranslation();
-  const { tickets } = useDataContext();
+  const { tickets, handleDeleteTicket } = useDataContext();
   const { showDialog } = useFormManagerContext();
-
-  const addClicked = useCallback(() => {
-    showDialog({
-      title: translate('Sample add'),
-      content: <TicketDefinition />,
-      callback: (data) => {
-        if (data) {
-          // getDataSource();
-        }
-      },
-    });
-  }, []);
+  const history = useHistory();
 
   const editClicked = useCallback((id, data) => {
-    data &&
-      showDialog({
-        title: translate('Sample edit'),
-        content: <TicketDefinition data={data} />,
-        callback: () => {
-          // getDataSource();
-        },
-      });
+    data && history.push(`/playground/ticket-page/${data.id}`);
+    console.log(data.id);
   }, []);
 
-  const deleteData = (id) => {
-    console.log('deleteData', deleteData);
-
-    // if (id) {
-    //   executeDelete({ url: stringFormat(apiUrls.sampleApi, id) }).then((response) => {
-    //     if (response.Success && response.Value) {
-    //       getDataSource();
-    //     }
-    //   });
-    // }
-  };
-
   const deleteClicked = useCallback((id, data) => {
-    // data && deleteData(data.Id);
-    deleteData();
-    console.log('deleteClicked', deleteClicked);
+    data && handleDeleteTicket(data.id);
+    console.log(data.id);
   }, []);
 
   const gridActionList = useMemo(
@@ -77,17 +49,6 @@ function Tickets() {
     [deleteClicked, editClicked],
   );
 
-  const cardActionList = useMemo(
-    () => [
-      {
-        name: 'Add',
-        icon: 'add',
-        onClick: addClicked,
-        scopeKey: scopeKeys.Create_Loan,
-      },
-    ],
-    [addClicked],
-  );
   const columns = useMemo(() => {
     return [
       { name: 'id', header: 'id', defaultFlex: 1, minWidth: 50, visible: false },
@@ -115,7 +76,7 @@ function Tickets() {
           />
         );
       })}
-      <Card scopeKey={scopeKeys.View_Loan} showHeader={true} actionList={cardActionList}>
+      <Card scopeKey={scopeKeys.View_Loan} showHeader={true}>
         <DataGrid
           dataSource={tickets}
           columns={columns}

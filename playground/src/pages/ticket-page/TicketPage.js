@@ -11,13 +11,14 @@ const uiMetadata = {
   moduleName: 'playground',
   uiKey: 'u6u6u6u6u6u',
 };
-function TicketPage() {
+function TicketPage({ data }) {
   const history = useHistory();
 
   const [loading, setLoading] = useState(false);
   const params = useParams();
 
   const urlTicketId = Number(params.ticketId);
+  // const dataTicketId = Number(data.id);
 
   const { handleTicketStatusChange, handleInputChange, findInTickets, foundTicket } = useDataContext();
 
