@@ -37,38 +37,41 @@ function TicketPage() {
   return (
     <BasePage title="TicketPage">
       <NavigationBar />
+      {foundTicket && (
+        <>
+          <h3>Name: {foundTicket.name}</h3>
+          <h3>Request Type : {foundTicket.requestType}</h3>
+          <h3>Request Message : {foundTicket.requestMessage}</h3>
+          <h3>Status : {foundTicket.status}</h3>
+          <select
+            id={`status-${urlTicketId}`}
+            onChange={(e) => handleTicketStatusChange(Number(urlTicketId), e.target.value)}
+            value={foundTicket.status}
+            required
+          >
+            <option value="new">new</option>
+            <option value="open">open</option>
+            <option value="closed">closed</option>
+            <option value="on-hold">on hold </option>
+          </select>
 
-      <h3>Name: {foundTicket.name}</h3>
-      <h3>Request Type : {foundTicket.requestType}</h3>
-      <h3>Request Message : {foundTicket.requestMessage}</h3>
-      <h3>Status : {foundTicket.status}</h3>
-      <select
-        id={`status-${urlTicketId}`}
-        onChange={(e) => handleTicketStatusChange(Number(urlTicketId), e.target.value)}
-        value={foundTicket.status}
-        required
-      >
-        <option value="new">new</option>
-        <option value="open">open</option>
-        <option value="closed">closed</option>
-        <option value="on-hold">on hold </option>
-      </select>
+          <div className="foundTicket-desc">
+            <h3>Note</h3>
+            <textarea
+              ref={textAreaRef}
+              name=""
+              id={`note-${urlTicketId}`}
+              cols="40"
+              rows="6"
+              value={foundTicket.note}
+              onChange={(e) => handleInputChange(urlTicketId, 'note', e.target.value)}
+              // onBlur={(e) => handleInputChange(urlTicketId, 'note', e.target.value)}
+            ></textarea>
+          </div>
 
-      <div className="foundTicket-desc">
-        <h3>Note</h3>
-        <textarea
-          ref={textAreaRef}
-          name=""
-          id={`note-${urlTicketId}`}
-          cols="40"
-          rows="6"
-          value={foundTicket.note}
-          onChange={(e) => handleInputChange(urlTicketId, 'note', e.target.value)}
-          // onBlur={(e) => handleInputChange(urlTicketId, 'note', e.target.value)}
-        ></textarea>
-      </div>
-
-      <button onClick={() => closeTicket()}>Save & Close Ticket</button>
+          <button onClick={() => closeTicket()}>Save & Close Ticket</button>
+        </>
+      )}
     </BasePage>
   );
 }

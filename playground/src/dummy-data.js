@@ -1,6 +1,6 @@
 export const DUMMY_DATA = [
   {
-    id: 1232,
+    id: 123,
     date: '25-1-2024 18:27:55',
     name: 'CTO Cihan Yıldız',
     status: 'open',
