@@ -1,14 +1,7 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react';
 
-import {
-  useAuthenticationContext,
-  useFiProxy,
-  useSnackbar,
-  useTranslation,
-  useTransactionContext,
-  scopeKeys,
-  stringFormat,
-} from 'component/base';
+import { useTranslation, scopeKeys } from 'component/base';
+
 import { BasePage, Card, Checkbox, Input, Select, SelectEnum, DatePicker, withFormPage } from 'component/ui';
 
 import { withPage, PageHeader } from 'component/ui';
@@ -36,8 +29,6 @@ function NewTicket() {
   const history = useHistory();
 
   const handleSubmit = () => {
-    console.log(nameRef.current.value, requestTypeRef.current.value, requestMessageRef.current.value);
-
     const formData = {
       id: generateCustomId(),
       date: generateTimestamp(),
@@ -47,8 +38,8 @@ function NewTicket() {
       status: 'new',
       note: 'not answered',
     };
-
     handleAddTicket(formData);
+    history.push('/playground/tickets');
   };
 
   const handleClick = () => {
@@ -80,11 +71,24 @@ function NewTicket() {
     console.log(formattedDateTime);
     return formattedDateTime;
   };
+  const onActionClick = (action) => {
+    if (action.commandName === 'Save') {
+      handleSubmit();
+      console.log('save');
+    } else if (action.commandName == 'Cancel') {
+      console.log('Cancel');
+    }
+  };
 
   return (
-    <BasePage title="New Ticket">
+    <BasePage
+      title="New Ticket"
+      onActionClick={onActionClick}
+      actionList={[{ name: 'Cancel' }, { name: 'Save', scopeKey: scopeKeys.Create_Loan }]}
+      actionPosition="bottom"
+    >
       <NavigationBar />
-      <Card>
+      <Card scopeKey={scopeKeys.Create_Loan}>
         <Input xs={6} required ref={nameRef} label={translate('Name')} />
         <Select
           datasource={[
@@ -101,7 +105,7 @@ function NewTicket() {
               value: 'Suggestion',
             },
           ]}
-          label="Select Component"
+          label="Request Type"
           name="Select"
           onChange={function noRefCheck() {}}
           value
@@ -109,29 +113,34 @@ function NewTicket() {
           xs={6}
         />
         <Input xs={12} required ref={requestMessageRef} rows={3} multiline label="Request Message" />
-      </Card>
-      <button onClick={handleSubmit}>Submit</button>
 
-      <Box>
-        <Button
+        <Box>
+          <Button
+            component="label"
+            variant="outlined"
+            startIcon={<GetIcon icon={'import'} />}
+            sx={{ marginRight: '1rem' }}
+          >
+            {'Icon upload'}
+            <input
+              type="file"
+              name="fileIcon"
+              hidden
+              //onChange={handleUpload.bind(this, 'Icon')}
+              accept="image/png"
+            />
+          </Button>
+        </Box>
+        {/* <Button
           component="label"
-          variant="outlined"
-          startIcon={<GetIcon icon={'import'} />}
+          variant="contained"
+          startIcon={<GetIcon icon={'send'} />}
           sx={{ marginRight: '1rem' }}
+          onClick={handleSubmit}
         >
-          {'Icon upload'}
-          <input
-            type="file"
-            name="fileIcon"
-            hidden
-            //onChange={handleUpload.bind(this, 'Icon')}
-            accept="image/png"
-          />
-        </Button>
-      </Box>
-      <Button secondary variant="contained" xs={8} onClick={handleClick}>
-        Go to Tickets
-      </Button>
+          Submit
+        </Button> */}
+      </Card>
     </BasePage>
   );
 }
