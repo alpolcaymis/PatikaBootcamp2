@@ -6,8 +6,8 @@ export const useDataContext = () => useContext(DataContext);
 const initialTickets = [
   {
     id: 123,
-    date: '22/01/2024',
-    name: 'Adana',
+    date: '22-01-2024',
+    name: 'CTO Cihan Yıldız',
     status: 'new',
     requestType: 'Problem',
     requestMessage: "Skype doesn't work!",
@@ -15,8 +15,8 @@ const initialTickets = [
   },
   {
     id: 456,
-    date: '22/01/2024',
-    name: 'Bursa',
+    date: '22-01-2024',
+    name: 'Erhan Akkaya',
     status: 'new',
     requestType: 'Problem',
     requestMessage: "Skype doesn't work!",
@@ -24,7 +24,7 @@ const initialTickets = [
   },
   {
     id: 789,
-    date: '22/01/2024',
+    date: '22-01-2024',
     name: 'Ceyhan',
     status: 'closed',
     requestType: 'Problem',
@@ -35,14 +35,29 @@ const initialTickets = [
 
 export const DataContextProvider = ({ children }) => {
   const [tickets, setTickets] = useState(initialTickets);
-  const [foundTicket, setFoundTicket] = useState({}); //It actually an object, not array. Rename it.
+  const [foundTicket, setFoundTicket] = useState({});
 
   const handleDeleteTicket = (id) => {
     const updatedTickets = tickets.filter((ticket) => ticket.id !== id);
     setTickets(updatedTickets);
   };
+
+  const handleAddTicket = (ticketObject) => {
+    setTickets([...tickets, { ...ticketObject }]);
+  };
+
   const findInTickets = (ticketID) => {
     setFoundTicket(tickets.find((item) => item.id == ticketID));
+  };
+
+  const handleTicketStatusChange = (id, value) => {
+    const updatedTickets = tickets.map((ticket) => {
+      if (ticket.id === id) {
+        return { ...ticket, status: value };
+      }
+      return ticket;
+    });
+    setTickets(updatedTickets);
   };
 
   return (
@@ -50,6 +65,8 @@ export const DataContextProvider = ({ children }) => {
       value={{
         tickets,
         setTickets,
+        handleAddTicket,
+        handleTicketStatusChange,
         handleDeleteTicket,
         findInTickets,
         foundTicket,

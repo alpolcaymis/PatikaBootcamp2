@@ -17,7 +17,7 @@ function Tickets() {
   const { tickets } = useDataContext();
 
   return (
-    <BasePage title="TicketPage">
+    <BasePage title="Tickets">
       <NavigationBar />
       {tickets.map((item) => {
         return (

@@ -23,7 +23,7 @@ const uiMetadata = {
 };
 
 function NewTicket() {
-  const { tickets, setTickets } = useDataContext();
+  const { tickets, setTickets, handleAddTicket } = useDataContext();
 
   const { translate } = useTranslation();
   const [dataModel, setDataModel] = useState({});
@@ -37,7 +37,18 @@ function NewTicket() {
 
   const handleSubmit = () => {
     console.log(nameRef.current.value, requestTypeRef.current.value, requestMessageRef.current.value);
-    handleAddTicket();
+
+    const formData = {
+      id: generateCustomId(),
+      date: generateTimestamp(),
+      name: nameRef.current.value,
+      requestType: requestTypeRef.current.value,
+      requestMessage: requestMessageRef.current.value,
+      status: 'new',
+      note: 'not answered',
+    };
+
+    handleAddTicket(formData);
   };
 
   const handleClick = () => {
@@ -70,23 +81,8 @@ function NewTicket() {
     return formattedDateTime;
   };
 
-  const handleAddTicket = () => {
-    setTickets([
-      ...tickets,
-      {
-        id: generateCustomId(),
-        date: generateTimestamp(),
-        name: nameRef.current.value,
-        requestType: requestTypeRef.current.value,
-        requestMessage: requestMessageRef.current.value,
-        status: 'new',
-        note: 'not answered',
-      },
-    ]);
-  };
-
   return (
-    <BasePage title="TicketPage">
+    <BasePage title="New Ticket">
       <NavigationBar />
       <Card>
         <Input xs={6} required ref={nameRef} label={translate('Name')} />
