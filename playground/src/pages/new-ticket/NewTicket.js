@@ -93,16 +93,29 @@ function NewTicket() {
         <Select
           datasource={[
             {
-              label: 'Problem',
-              value: 'Problem',
+              label: 'Connectivity problem',
+              value: 'Connectivity problem',
             },
             {
-              label: 'Help',
-              value: 'Help',
+              label: 'Email issues',
+              value: 'Email issues',
             },
             {
-              label: 'Suggestion',
-              value: 'Suggestion',
+              label: 'User and Access Management',
+              value: 'User and Access Management',
+            },
+            {
+              label: 'Network issues',
+              value: 'Network issues',
+            },
+            {
+              label: 'Security concerns',
+              value: 'Security concerns',
+            },
+
+            {
+              label: 'Hardware requests',
+              value: 'Hardware requests',
             },
           ]}
           label="Request Type"
