@@ -23,15 +23,15 @@ function Tickets() {
   const { showDialog } = useFormManagerContext();
   const history = useHistory();
 
-  const editClicked = useCallback((id, data) => {
+  const editClicked = (id, data) => {
     data && history.push(`/playground/ticket-page/${data.id}`);
     console.log(data.id);
-  }, []);
+  };
 
-  const deleteClicked = useCallback((id, data) => {
+  const deleteClicked = (id, data) => {
     data && handleDeleteTicket(data.id);
     console.log(data.id);
-  }, []);
+  };
 
   const gridActionList = useMemo(
     () => [
@@ -64,25 +64,14 @@ function Tickets() {
   return (
     <BasePage title="Tickets">
       <NavigationBar />
-      {tickets.map((item) => {
-        return (
-          <TicketItem
-            key={item.id}
-            id={item.id}
-            date={item.date}
-            name={item.name}
-            status={item.status}
-            note={item.note}
-          />
-        );
-      })}
+
       <Card scopeKey={scopeKeys.View_Loan} showHeader={true}>
         <DataGrid
           dataSource={tickets}
           columns={columns}
           actionList={gridActionList}
           autoSizeAllColumns
-          // idProperty="Id"
+          idProperty="Id"
         />
       </Card>
     </BasePage>
