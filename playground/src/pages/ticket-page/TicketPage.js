@@ -1,11 +1,35 @@
 import React, { useEffect, useRef, useState } from 'react';
 import NavigationBar from '../../components/NavigationBar/NavigationBar';
 import Spinner from '../../components/Spinner/Spinner';
-import { withPage, PageHeader, ActionBar, Card, InformationGrid, Grid, Select, BasePage } from 'component/ui';
+import {
+  withPage,
+  PageHeader,
+  ActionBar,
+  InformationText,
+  Card,
+  InformationGrid,
+  Grid,
+  Divider,
+  Select,
+  BasePage,
+  GetIcon,
+  Button,
+} from 'component/ui';
+import { scopeKeys } from 'component/base';
 import { useHistory } from 'react-router-dom';
 
 import { useParams } from 'react-router-dom';
 import { useDataContext } from '../../context/data-context';
+
+const textareaStyle = {
+  boxSizing: 'border-box',
+  WebkitBoxSizing: 'border-box',
+  MozBoxSizing: 'border-box',
+  width: '100%',
+  fontSize: '16px',
+  color: '#333',
+  padding: '10px',
+};
 
 const uiMetadata = {
   moduleName: 'playground',
@@ -39,37 +63,70 @@ function TicketPage({ data }) {
     <BasePage title="TicketPage">
       <NavigationBar />
       <>
-        <h3>Name: {foundTicket.name}</h3>
-        <h3>Request Type : {foundTicket.requestType}</h3>
-        <h3>Request Message : {foundTicket.requestMessage}</h3>
-        <h3>Status : {foundTicket.status}</h3>
-        <select
-          id={`status-${urlTicketId}`}
-          onChange={(e) => handleTicketStatusChange(Number(urlTicketId), e.target.value)}
-          value={foundTicket.status}
-          required
-        >
-          <option value="new">new</option>
-          <option value="open">open</option>
-          <option value="closed">closed</option>
-          <option value="on-hold">on hold </option>
-        </select>
+        <Grid>
+          <Card
+            scopeKey={scopeKeys.View_Loan}
+            showHeader={true}
+            title={`Ticket ID : #${foundTicket.id}`}
+            xs={3}
+            md={3}
+            lg={3}
+          >
+            <InformationText subtitle={foundTicket.name} title="Name:" />
+            <Divider light orientation="horizontal" variant="middle" />
+            <InformationText subtitle={foundTicket.date} title="Date:" />
+            <InformationText subtitle={foundTicket.requestType} title="Request Type:" />
+            <InformationText
+              subtitle={
+                <select
+                  id={`status-${urlTicketId}`}
+                  onChange={(e) => handleTicketStatusChange(Number(urlTicketId), e.target.value)}
+                  value={foundTicket.status}
+                  required
+                >
+                  <option value="new">new</option>
+                  <option value="open">open</option>
+                  <option value="closed">closed</option>
+                  <option value="on-hold">on hold </option>
+                </select>
+              }
+              title="Status:"
+            />
+          </Card>
 
-        <div className="foundTicket-desc">
-          <h3>Note</h3>
-          <textarea
-            ref={textAreaRef}
-            name=""
-            id={`note-${urlTicketId}`}
-            cols="40"
-            rows="6"
-            value={foundTicket.note}
-            onChange={(e) => handleInputChange(urlTicketId, 'note', e.target.value)}
-            // onBlur={(e) => handleInputChange(urlTicketId, 'note', e.target.value)}
-          ></textarea>
-        </div>
-
-        <button onClick={() => closeTicket()}>Save & Close Ticket</button>
+          <Card scopeKey={scopeKeys.View_Loan} xs={5} md={5} lg={5}>
+            <Card scopeKey="Public" variant="outlined">
+              <InformationText subtitle={foundTicket.requestMessage} title="Request Message:" />
+            </Card>
+          </Card>
+          <Card scopeKey={scopeKeys.View_Loan} showHeader={true} title="Reply the request" xs={5}>
+            <InformationText
+              subtitle={
+                <textarea
+                  style={textareaStyle}
+                  ref={textAreaRef}
+                  name=""
+                  id={`note-${urlTicketId}`}
+                  cols="40"
+                  rows="6"
+                  value={foundTicket.note}
+                  onChange={(e) => handleInputChange(urlTicketId, 'note', e.target.value)}
+                  // onBlur={(e) => handleInputChange(urlTicketId, 'note', e.target.value)}
+                ></textarea>
+              }
+              title="Answer Message:"
+            />
+            <Button
+              component="label"
+              variant="contained"
+              startIcon={<GetIcon icon={'pushPin'} />}
+              sx={{ marginRight: '1rem', color: 'white', backgroundColor: 'red' }}
+              onClick={() => closeTicket()}
+            >
+              Save & Close Ticket
+            </Button>
+          </Card>
+        </Grid>
       </>
     </BasePage>
   );
