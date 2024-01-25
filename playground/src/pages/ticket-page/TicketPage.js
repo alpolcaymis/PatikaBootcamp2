@@ -62,72 +62,74 @@ function TicketPage({ data }) {
   return (
     <BasePage title="TicketPage">
       <NavigationBar />
-      <>
-        <Grid>
-          <Card
-            scopeKey={scopeKeys.View_Loan}
-            showHeader={true}
-            title={`Ticket ID : #${foundTicket.id}`}
-            xs={3}
-            md={3}
-            lg={3}
-          >
-            <InformationText subtitle={foundTicket.name} title="Name:" />
-            <Divider light orientation="horizontal" variant="middle" />
-            <InformationText subtitle={foundTicket.date} title="Date:" />
-            <InformationText subtitle={foundTicket.requestType} title="Request Type:" />
-            <InformationText
-              subtitle={
-                <select
-                  id={`status-${urlTicketId}`}
-                  onChange={(e) => handleTicketStatusChange(Number(urlTicketId), e.target.value)}
-                  value={foundTicket.status}
-                  required
-                >
-                  <option value="new">new</option>
-                  <option value="open">open</option>
-                  <option value="closed">closed</option>
-                  <option value="on-hold">on hold </option>
-                </select>
-              }
-              title="Status:"
-            />
-          </Card>
-
-          <Card scopeKey={scopeKeys.View_Loan} xs={5} md={5} lg={5}>
-            <Card scopeKey="Public" variant="outlined">
-              <InformationText subtitle={foundTicket.requestMessage} title="Request Message:" />
-            </Card>
-          </Card>
-          <Card scopeKey={scopeKeys.View_Loan} showHeader={true} title="Reply the request" xs={5}>
-            <InformationText
-              subtitle={
-                <textarea
-                  style={textareaStyle}
-                  ref={textAreaRef}
-                  name=""
-                  id={`note-${urlTicketId}`}
-                  cols="40"
-                  rows="6"
-                  value={foundTicket.note}
-                  onChange={(e) => handleInputChange(urlTicketId, 'note', e.target.value)}
-                  // onBlur={(e) => handleInputChange(urlTicketId, 'note', e.target.value)}
-                ></textarea>
-              }
-              title="Answer Message:"
-            />
-            <Button
-              component="label"
-              variant="contained"
-              startIcon={<GetIcon icon={'pushPin'} />}
-              sx={{ marginRight: '1rem', color: 'white', backgroundColor: 'red' }}
-              onClick={() => closeTicket()}
+      {foundTicket && (
+        <>
+          <Grid>
+            <Card
+              scopeKey={scopeKeys.View_Loan}
+              showHeader={true}
+              title={`Ticket ID : #${foundTicket.id}`}
+              xs={3}
+              md={3}
+              lg={3}
             >
-              Save & Close Ticket
-            </Button>
-          </Card>
-        </Grid>
-      </>
+              <InformationText subtitle={foundTicket.name} title="Name:" />
+              <Divider light orientation="horizontal" variant="middle" />
+              <InformationText subtitle={foundTicket.date} title="Date:" />
+              <InformationText subtitle={foundTicket.requestType} title="Request Type:" />
+              <InformationText
+                subtitle={
+                  <select
+                    id={`status-${urlTicketId}`}
+                    onChange={(e) => handleTicketStatusChange(Number(urlTicketId), e.target.value)}
+                    value={foundTicket.status}
+                    required
+                  >
+                    <option value="new">new</option>
+                    <option value="open">open</option>
+                    <option value="closed">closed</option>
+                    <option value="on-hold">on hold </option>
+                  </select>
+                }
+                title="Status:"
+              />
+            </Card>
+
+            <Card scopeKey={scopeKeys.View_Loan} xs={5} md={5} lg={5}>
+              <Card scopeKey="Public" variant="outlined">
+                <InformationText subtitle={foundTicket.requestMessage} title="Request Message:" />
+              </Card>
+            </Card>
+            <Card scopeKey={scopeKeys.View_Loan} showHeader={true} title="Reply the request" xs={5}>
+              <InformationText
+                subtitle={
+                  <textarea
+                    style={textareaStyle}
+                    ref={textAreaRef}
+                    name=""
+                    id={`note-${urlTicketId}`}
+                    cols="40"
+                    rows="6"
+                    value={foundTicket.note}
+                    onChange={(e) => handleInputChange(urlTicketId, 'note', e.target.value)}
+                    // onBlur={(e) => handleInputChange(urlTicketId, 'note', e.target.value)}
+                  ></textarea>
+                }
+                title="Answer Message:"
+              />
+              <Button
+                component="label"
+                variant="contained"
+                startIcon={<GetIcon icon={'pushPin'} />}
+                sx={{ marginRight: '1rem', color: 'white', backgroundColor: 'red' }}
+                onClick={() => closeTicket()}
+              >
+                Save & Close Ticket
+              </Button>
+            </Card>
+          </Grid>
+        </>
+      )}
     </BasePage>
   );
 }
