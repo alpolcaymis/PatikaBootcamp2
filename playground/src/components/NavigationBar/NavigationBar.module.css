@@ -1,16 +1,17 @@
-.ul {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  list-style: none;
-}
-.ul li {
-  text-decoration: none;
+.li {
+  /* text-decoration: none;
   list-style: none;
   line-height: 1.2rem;
-  background-color: aqua;
-  padding: 0.5rem;
   border-radius: 6px;
-  color: white;
+  color: white; */
+  /* background-color: aqua; */
+  padding: 0%;
+}
+.li a {
+  text-decoration: none;
+  list-style: none;
+  line-height: 1rem;
+  border-radius: 6px;
+  color: gray;
+  width: 100%;
 }
