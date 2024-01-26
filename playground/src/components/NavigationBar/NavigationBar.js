@@ -18,10 +18,9 @@ function NavigationBar() {
     <>
       <Box sx={{ padding: '1px 4px' }}>
         <Tabs value={value} onChange={handleChange} variant="fullWidth" aria-label="wrapped label tabs example">
+          <Tab className={classes.li} label={<Link to="/playground/adana-page">Adana PAge</Link>} />
           <Tab className={classes.li} label={<Link to="/playground/new-ticket">New Ticket</Link>} />
           <Tab className={classes.li} label={<Link to="/playground/tickets">Tickets</Link>} />
-          <Tab className={classes.li} label={<Link to="/playground/ticket-definition">Ticket Definition</Link>} />
-          <Tab className={classes.li} label={<Link to="/playground/ticket-list">Ticket List</Link>} />
           <Tab className={classes.li} label={<Link to="/playground/ticket-page/123">Ticket Page</Link>} />
         </Tabs>
       </Box>
