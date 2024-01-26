@@ -38,6 +38,7 @@ const uiMetadata = {
   uiKey: 'u6u6u6u6u6u',
 };
 function TicketPage({ data }) {
+  console.log('TicketPage run');
   const history = useHistory();
   const [loading, setLoading] = useState(false);
   const [shareLinkCopied, setShareLinkCopied] = useState(false);
@@ -52,7 +53,7 @@ function TicketPage({ data }) {
     readTicket(params.ticketId);
   }, [params.ticketId]);
 
-  console.log(ticket);
+  console.log('ticket: ', ticket);
 
   const textAreaRef = useRef();
 
@@ -122,9 +123,9 @@ function TicketPage({ data }) {
                     id={`note-${numberizedUrlTicketId}`}
                     cols="40"
                     rows="6"
-                    // value={ticket.note}
+                    value={ticket.note}
                     placeholder={ticket.note}
-                    // onChange={(event) => handleInputChange(numberizedUrlTicketId, 'note', event.target.value)}
+                    onChange={(event) => handleInputChange(numberizedUrlTicketId, 'note', event.target.value)}
                     onBlur={() => updateTicket(params.ticketId, 'note', textAreaRef.current.value)}
                   ></textarea>
                 }

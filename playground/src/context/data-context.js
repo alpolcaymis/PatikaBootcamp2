@@ -9,6 +9,8 @@ import { db } from '../firebase-config';
 import { collection, getDocs, getDoc, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
 
 export const DataContextProvider = ({ children }) => {
+  console.log('data-context run');
+
   const [tickets, setTickets] = useState(initialTickets);
   const [ticket, setTicket] = useState(null);
 
@@ -37,6 +39,7 @@ export const DataContextProvider = ({ children }) => {
 
   useEffect(() => {
     const getTickets = async () => {
+      console.log('getTickets run in useEffect');
       const data = await getDocs(ticketsCollectionRef);
       console.log(data);
       setTickets(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
