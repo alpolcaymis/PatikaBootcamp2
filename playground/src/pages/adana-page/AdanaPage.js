@@ -16,7 +16,7 @@ import {
 import { DataContextProvider } from '../../context/data-context';
 
 import { db } from '../../firebase-config';
-import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
+import { collection, getDocs, getDoc, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
 
 const uiMetadata = {
   moduleName: 'playground',
@@ -42,20 +42,20 @@ function AdanaPage() {
     await updateDoc(ticketDoc, newFields);
   };
 
-  const deleteTicket = async (id, age) => {
+  const deleteTicket = async (id) => {
     const ticketDoc = doc(db, 'tickets', id);
     await deleteDoc(ticketDoc);
   };
 
-  useEffect(() => {
-    const getTickets = async () => {
-      const data = await getDocs(ticketsCollectionRef);
-      console.log(data);
-      setTickets(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    };
+  // useEffect(() => {
+  //   const getTickets = async () => {
+  //     const data = await getDocs(ticketsCollectionRef);
+  //     console.log(data);
+  //     setTickets(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+  //   };
 
-    getTickets();
-  }, []);
+  //   getTickets();
+  // }, []);
 
   // const getData = () => {
   //   executeGet({ fullURL: `https://api.sampleapis.com/cartoons/cartoons2D`, enqueueSnackbarOnError: false }).then(

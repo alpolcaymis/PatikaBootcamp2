@@ -20,6 +20,8 @@ import { useHistory } from 'react-router-dom';
 
 import { useParams } from 'react-router-dom';
 import { useDataContext } from '../../context/data-context';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { db } from '../../firebase-config';
 
 const textareaStyle = {
   boxSizing: 'border-box',
@@ -37,14 +39,19 @@ const uiMetadata = {
 };
 function TicketPage({ data }) {
   const history = useHistory();
-
+  const [ticket, setTicket] = useState(null);
   const [loading, setLoading] = useState(false);
-  const params = useParams();
+  const [shareLinkCopied, setShareLinkCopied] = useState(false);
 
+  const { handleTicketStatusChange, handleInputChange, findInTickets, foundTicket, readTicket } = useDataContext();
+
+  const params = useParams();
   const urlTicketId = Number(params.ticketId);
   // const dataTicketId = Number(data.id);
 
-  const { handleTicketStatusChange, handleInputChange, findInTickets, foundTicket } = useDataContext();
+  useEffect(() => {
+    readTicket(params.ticketId);
+  }, [params.ticketId]);
 
   const textAreaRef = useRef();
 
@@ -55,9 +62,9 @@ function TicketPage({ data }) {
 
   findInTickets(urlTicketId);
 
-  if (loading) {
-    return <Spinner />;
-  }
+  // if (loading) {
+  //   return <Spinner />;
+  // }
 
   return (
     <BasePage title="TicketPage">

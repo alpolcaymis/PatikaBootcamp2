@@ -6,7 +6,7 @@ export const useDataContext = () => useContext(DataContext);
 import { DUMMY_DATA as initialTickets } from '../dummy-data.js';
 
 import { db } from '../firebase-config';
-import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
+import { collection, getDocs, getDoc, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
 
 export const DataContextProvider = ({ children }) => {
   const [tickets, setTickets] = useState(initialTickets);
@@ -19,6 +19,12 @@ export const DataContextProvider = ({ children }) => {
     await addDoc(ticketsCollectionRef, {
       formData2,
     });
+  };
+
+  const readTicket = async (id) => {
+    const ticketDoc = doc(db, 'tickets', id);
+    const selam = await getDoc(ticketDoc);
+    console.log('readTicket:', selam);
   };
 
   useEffect(() => {
@@ -82,6 +88,7 @@ export const DataContextProvider = ({ children }) => {
         foundTicket,
         createTicket,
         deleteTicket,
+        readTicket,
       }}
     >
       {children}
