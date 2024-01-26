@@ -1,42 +1,40 @@
 import React from 'react';
-import { createContext, useState, useContext } from 'react';
+import { createContext, useState, useContext, useEffect } from 'react';
 export const DataContext = createContext();
 export const useDataContext = () => useContext(DataContext);
 
 import { DUMMY_DATA as initialTickets } from '../dummy-data.js';
-// const initialTickets = [
-//   {
-//     id: 123,
-//     date: '22-01-2024',
-//     name: 'CTO Cihan Yıldız',
-//     status: 'new',
-//     requestType: 'Problem',
-//     requestMessage: "Skype doesn't work!",
-//     note: 'message',
-//   },
-//   {
-//     id: 456,
-//     date: '22-01-2024',
-//     name: 'Erhan Akkaya',
-//     status: 'new',
-//     requestType: 'Problem',
-//     requestMessage: "Skype doesn't work!",
-//     note: 'message',
-//   },
-//   {
-//     id: 789,
-//     date: '22-01-2024',
-//     name: 'Ceyhan',
-//     status: 'closed',
-//     requestType: 'Problem',
-//     requestMessage: "Skype doesn't work!",
-//     note: 'message',
-//   },
-// ];
+
+import { db } from '../firebase-config';
+import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
 
 export const DataContextProvider = ({ children }) => {
   const [tickets, setTickets] = useState(initialTickets);
+  const [tickets2, setTickets2] = useState([]);
   const [foundTicket, setFoundTicket] = useState({});
+
+  const ticketsCollectionRef = collection(db, 'tickets');
+
+  const createTicket = async (formData2) => {
+    await addDoc(ticketsCollectionRef, {
+      formData2,
+    });
+  };
+
+  useEffect(() => {
+    const getTickets = async () => {
+      const data = await getDocs(ticketsCollectionRef);
+      console.log(data);
+      setTickets(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    };
+
+    getTickets();
+  }, []);
+
+  const deleteTicket = async (id) => {
+    const ticketDoc = doc(db, 'tickets', id);
+    await deleteDoc(ticketDoc);
+  };
 
   const handleDeleteTicket = (id) => {
     const updatedTickets = tickets.filter((ticket) => ticket.id !== id);
@@ -82,9 +80,41 @@ export const DataContextProvider = ({ children }) => {
         handleDeleteTicket,
         findInTickets,
         foundTicket,
+        createTicket,
+        deleteTicket,
       }}
     >
       {children}
     </DataContext.Provider>
   );
 };
+
+// const initialTickets = [
+//   {
+//     id: 123,
+//     date: '22-01-2024',
+//     name: 'CTO Cihan Yıldız',
+//     status: 'new',
+//     requestType: 'Problem',
+//     requestMessage: "Skype doesn't work!",
+//     note: 'message',
+//   },
+//   {
+//     id: 456,
+//     date: '22-01-2024',
+//     name: 'Erhan Akkaya',
+//     status: 'new',
+//     requestType: 'Problem',
+//     requestMessage: "Skype doesn't work!",
+//     note: 'message',
+//   },
+//   {
+//     id: 789,
+//     date: '22-01-2024',
+//     name: 'Ceyhan',
+//     status: 'closed',
+//     requestType: 'Problem',
+//     requestMessage: "Skype doesn't work!",
+//     note: 'message',
+//   },
+// ];

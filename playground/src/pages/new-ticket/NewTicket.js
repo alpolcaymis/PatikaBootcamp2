@@ -10,13 +10,16 @@ import { useHistory } from 'react-router-dom';
 import { Button, Box, GetIcon } from 'component/ui';
 import { useDataContext } from '../../context/data-context';
 
+import { db } from '../../firebase-config';
+import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
+
 const uiMetadata = {
   moduleName: 'playground',
   uiKey: 'u3u3u3u3u3u',
 };
 
 function NewTicket() {
-  const { tickets, setTickets, handleAddTicket } = useDataContext();
+  const { tickets, setTickets, handleAddTicket, createTicket } = useDataContext();
 
   const { translate } = useTranslation();
   const [dataModel, setDataModel] = useState({});
@@ -28,9 +31,11 @@ function NewTicket() {
 
   const history = useHistory();
 
+  const ticketsCollectionRef = collection(db, 'tickets');
+
   const handleSubmit = () => {
     const formData = {
-      id: generateCustomId(),
+      // id: generateCustomId(),
       date: generateTimestamp(),
       name: nameRef.current.value,
       requestType: requestTypeRef.current.value,
@@ -38,6 +43,7 @@ function NewTicket() {
       status: 'new',
       note: 'not answered',
     };
+    createTicket(formData);
     handleAddTicket(formData);
     history.push('/playground/tickets');
   };
@@ -144,7 +150,7 @@ function NewTicket() {
             />
           </Button>
         </Box>
-        {/* <Button
+        <Button
           component="label"
           variant="contained"
           startIcon={<GetIcon icon={'send'} />}
@@ -152,7 +158,7 @@ function NewTicket() {
           onClick={handleSubmit}
         >
           Submit
-        </Button> */}
+        </Button>
       </Card>
     </BasePage>
   );

@@ -19,7 +19,7 @@ const uiMetadata = {
 
 function Tickets() {
   const { translate } = useTranslation();
-  const { tickets, handleDeleteTicket } = useDataContext();
+  const { tickets, handleDeleteTicket, deleteTicket } = useDataContext();
   const { showDialog } = useFormManagerContext();
   const history = useHistory();
 
@@ -30,6 +30,7 @@ function Tickets() {
 
   const deleteClicked = (id, data) => {
     data && handleDeleteTicket(data.id);
+    data && deleteTicket(data.id);
     console.log(data.id);
   };
 
