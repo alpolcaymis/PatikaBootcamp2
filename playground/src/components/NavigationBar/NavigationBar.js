@@ -16,7 +16,7 @@ function NavigationBar() {
 
   return (
     <>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider', padding: '1px' }}>
+      <Box sx={{ padding: '1px 4px' }}>
         <Tabs value={value} onChange={handleChange} variant="fullWidth" aria-label="wrapped label tabs example">
           <Tab className={classes.li} label={<Link to="/playground/new-ticket">New Ticket</Link>} />
           <Tab className={classes.li} label={<Link to="/playground/tickets">Tickets</Link>} />
