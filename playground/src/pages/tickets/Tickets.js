@@ -18,6 +18,7 @@ const uiMetadata = {
 };
 
 function Tickets() {
+  console.log('<Tickets> run');
   const { translate } = useTranslation();
   const { tickets, handleDeleteTicket, deleteTicket } = useDataContext();
   const { showDialog } = useFormManagerContext();
