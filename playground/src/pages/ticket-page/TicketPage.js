@@ -52,6 +52,8 @@ function TicketPage({ data }) {
     readTicket(params.ticketId);
   }, [params.ticketId]);
 
+  console.log(ticket);
+
   const textAreaRef = useRef();
 
   const closeTicket = () => {
@@ -123,8 +125,7 @@ function TicketPage({ data }) {
                     // value={ticket.note}
                     placeholder={ticket.note}
                     // onChange={(event) => handleInputChange(numberizedUrlTicketId, 'note', event.target.value)}
-                    onChange={() => updateTicket(params.ticketId, 'note', textAreaRef.current.value)}
-                    // onBlur={(e) => updateTicket(params.ticketId, 'note', e.target.value)}
+                    onBlur={() => updateTicket(params.ticketId, 'note', textAreaRef.current.value)}
                   ></textarea>
                 }
                 title="Answer Message:"

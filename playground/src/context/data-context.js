@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { createContext, useState, useContext, useEffect } from 'react';
 export const DataContext = createContext();
 export const useDataContext = () => useContext(DataContext);
@@ -19,8 +19,7 @@ export const DataContextProvider = ({ children }) => {
       formData2,
     });
   };
-
-  const readTicket = (ticketId) => {
+  const readTicket = useCallback((ticketId) => {
     const fetchTicket = async () => {
       const docRef = doc(db, 'tickets', ticketId);
 
@@ -34,7 +33,7 @@ export const DataContextProvider = ({ children }) => {
       }
     };
     fetchTicket();
-  };
+  }, []);
 
   useEffect(() => {
     const getTickets = async () => {
