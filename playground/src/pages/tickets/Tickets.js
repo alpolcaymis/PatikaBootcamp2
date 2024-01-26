@@ -5,12 +5,7 @@ import { withPage, DataGrid, Card, BasePage } from 'component/ui';
 import { useTranslation, useFormManagerContext, scopeKeys } from 'component/base';
 import { useHistory } from 'react-router-dom';
 
-import TicketItem from '../../components/TicketItem/TicketItem';
-
 import { useDataContext } from '../../context/data-context';
-
-import TicketDefinition from '../ticket-definition/TicketDefinition';
-import TicketPage from '../ticket-page/TicketPage';
 
 const uiMetadata = {
   moduleName: 'playground',

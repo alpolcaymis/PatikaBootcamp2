@@ -40,7 +40,7 @@ const uiMetadata = {
 function TicketPage({ data }) {
   console.log('TicketPage run');
   const history = useHistory();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [shareLinkCopied, setShareLinkCopied] = useState(false);
 
   const { handleTicketStatusChange, handleInputChange, updateTicket, readTicket, ticket } = useDataContext();
@@ -50,7 +50,9 @@ function TicketPage({ data }) {
   // const dataTicketId = Number(data.id);
 
   useEffect(() => {
+    setLoading(true);
     readTicket(params.ticketId);
+    setLoading(false);
   }, [params.ticketId]);
 
   console.log('ticket: ', ticket);
@@ -123,9 +125,9 @@ function TicketPage({ data }) {
                     id={`note-${numberizedUrlTicketId}`}
                     cols="40"
                     rows="6"
-                    value={ticket.note}
                     placeholder={ticket.note}
-                    onChange={(event) => handleInputChange(numberizedUrlTicketId, 'note', event.target.value)}
+                    value={ticket.note}
+                    onChange={(e) => handleInputChange(numberizedUrlTicketId, 'note', e.target.value)}
                     onBlur={() => updateTicket(params.ticketId, 'note', textAreaRef.current.value)}
                   ></textarea>
                 }
