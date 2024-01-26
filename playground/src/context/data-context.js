@@ -22,9 +22,13 @@ export const DataContextProvider = ({ children }) => {
   };
 
   const readTicket = async (id) => {
-    const ticketDoc = doc(db, 'tickets', id);
-    const selam = await getDoc(ticketDoc);
-    console.log('readTicket:', selam);
+    const docRef = doc(db, 'tickets', id);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      setFoundTicket({ ...doc.data(), id: doc.id });
+    }
+    console.log('docSnap', docSnap);
+    console.log('foundTicket', foundTicket);
   };
 
   useEffect(() => {
