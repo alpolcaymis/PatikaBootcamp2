@@ -8,6 +8,7 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 
 function NavigationBar() {
+  //value index problem need to fix
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
