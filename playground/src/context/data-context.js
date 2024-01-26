@@ -10,8 +10,9 @@ import { collection, getDocs, getDoc, addDoc, updateDoc, deleteDoc, doc } from '
 
 export const DataContextProvider = ({ children }) => {
   const [tickets, setTickets] = useState(initialTickets);
-  const [tickets2, setTickets2] = useState([]);
+  const [tickets2, setTickets2] = useState(null);
   const [foundTicket, setFoundTicket] = useState({});
+  const [ticket, setTicket] = useState(null);
 
   const ticketsCollectionRef = collection(db, 'tickets');
 
@@ -21,14 +22,20 @@ export const DataContextProvider = ({ children }) => {
     });
   };
 
-  const readTicket = async (id) => {
-    const docRef = doc(db, 'tickets', id);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      setFoundTicket({ ...doc.data(), id: doc.id });
-    }
-    console.log('docSnap', docSnap);
-    console.log('foundTicket', foundTicket);
+  const readTicket = (ticketId) => {
+    const fetchTicket = async () => {
+      const docRef = doc(db, 'tickets', ticketId);
+
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        setTicket(docSnap.data());
+        console.log('first');
+      } else {
+        console.log('second');
+      }
+    };
+    fetchTicket();
   };
 
   useEffect(() => {
@@ -40,6 +47,15 @@ export const DataContextProvider = ({ children }) => {
 
     getTickets();
   }, []);
+
+  const updateTicket = async (id, value) => {
+    console.log('satus tupdate');
+    const ticketDoc = doc(db, 'tickets', id);
+    const newFields = {
+      status: value,
+    };
+    await updateDoc(ticketDoc, newFields);
+  };
 
   const deleteTicket = async (id) => {
     const ticketDoc = doc(db, 'tickets', id);
@@ -93,6 +109,10 @@ export const DataContextProvider = ({ children }) => {
         createTicket,
         deleteTicket,
         readTicket,
+        tickets2,
+        setTickets2,
+        updateTicket,
+        ticket,
       }}
     >
       {children}

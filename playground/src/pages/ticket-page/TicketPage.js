@@ -39,11 +39,20 @@ const uiMetadata = {
 };
 function TicketPage({ data }) {
   const history = useHistory();
-  const [ticket, setTicket] = useState(null);
+  // const [ticket, setTicket] = useState(null);
   const [loading, setLoading] = useState(false);
   const [shareLinkCopied, setShareLinkCopied] = useState(false);
 
-  const { handleTicketStatusChange, handleInputChange, findInTickets, foundTicket, readTicket } = useDataContext();
+  const {
+    handleTicketStatusChange,
+    handleInputChange,
+    findInTickets,
+    updateTicket,
+    foundTicket,
+    readTicket,
+    tickets2,
+    ticket,
+  } = useDataContext();
 
   const params = useParams();
   const urlTicketId = Number(params.ticketId);
@@ -53,6 +62,22 @@ function TicketPage({ data }) {
     readTicket(params.ticketId);
   }, [params.ticketId]);
 
+  // useEffect(() => {
+  //   const fetchTicket = async () => {
+  //     const docRef = doc(db, 'tickets', params.ticketId);
+
+  //     const docSnap = await getDoc(docRef);
+
+  //     if (docSnap.exists()) {
+  //       setTicket(docSnap.data());
+  //       console.log('first');
+  //     } else {
+  //       console.log('second');
+  //     }
+  //   };
+  //   fetchTicket();
+  // }, [params.ticketId]);
+
   const textAreaRef = useRef();
 
   const closeTicket = () => {
@@ -60,36 +85,41 @@ function TicketPage({ data }) {
     history.push('/playground/tickets');
   };
 
-  findInTickets(urlTicketId);
+  // findInTickets(urlTicketId);
 
-  // if (loading) {
-  //   return <Spinner />;
-  // }
+  if (loading) {
+    return <Spinner />;
+  }
 
   return (
     <BasePage title="TicketPage">
       <NavigationBar />
-      {foundTicket && (
+      <h1>selam</h1>
+
+      {ticket && (
         <>
           <Grid>
             <Card
               scopeKey={scopeKeys.View_Loan}
               showHeader={true}
-              title={`Ticket ID : #${foundTicket.id}`}
+              // title={`Ticket ID : #${ticket.id}`}
               xs={3}
               md={3}
               lg={3}
             >
-              <InformationText subtitle={foundTicket.name} title="Name:" />
+              <InformationText subtitle={ticket.name} title="Name:" />
               <Divider light orientation="horizontal" variant="middle" />
-              <InformationText subtitle={foundTicket.date} title="Date:" />
-              <InformationText subtitle={foundTicket.requestType} title="Request Type:" />
+              <InformationText subtitle={ticket.date} title="Date:" />
+              <InformationText subtitle={ticket.requestType} title="Request Type:" />
               <InformationText
                 subtitle={
                   <select
                     id={`status-${urlTicketId}`}
-                    onChange={(e) => handleTicketStatusChange(Number(urlTicketId), e.target.value)}
-                    value={foundTicket.status}
+                    // onChange={(e) => handleTicketStatusChange(Number(urlTicketId), e.target.value)}
+                    onChange={(e) => {
+                      updateTicket(params.ticketId, e.target.value);
+                    }}
+                    value={ticket.status}
                     required
                   >
                     <option value="new">new</option>
@@ -104,7 +134,7 @@ function TicketPage({ data }) {
 
             <Card scopeKey={scopeKeys.View_Loan} xs={5} md={5} lg={5}>
               <Card scopeKey="Public" variant="outlined">
-                <InformationText subtitle={foundTicket.requestMessage} title="Request Message:" />
+                <InformationText subtitle={ticket.requestMessage} title="Request Message:" />
               </Card>
             </Card>
             <Card scopeKey={scopeKeys.View_Loan} showHeader={true} title="Reply the request" xs={5}>
@@ -117,7 +147,7 @@ function TicketPage({ data }) {
                     id={`note-${urlTicketId}`}
                     cols="40"
                     rows="6"
-                    value={foundTicket.note}
+                    value={ticket.note}
                     onChange={(e) => handleInputChange(urlTicketId, 'note', e.target.value)}
                     // onBlur={(e) => handleInputChange(urlTicketId, 'note', e.target.value)}
                   ></textarea>
