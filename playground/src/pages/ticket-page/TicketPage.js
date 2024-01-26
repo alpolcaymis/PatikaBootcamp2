@@ -39,53 +39,26 @@ const uiMetadata = {
 };
 function TicketPage({ data }) {
   const history = useHistory();
-  // const [ticket, setTicket] = useState(null);
   const [loading, setLoading] = useState(false);
   const [shareLinkCopied, setShareLinkCopied] = useState(false);
 
-  const {
-    handleTicketStatusChange,
-    handleInputChange,
-    findInTickets,
-    updateTicket,
-    foundTicket,
-    readTicket,
-    tickets2,
-    ticket,
-  } = useDataContext();
+  const { handleTicketStatusChange, handleInputChange, updateTicket, readTicket, ticket } = useDataContext();
 
   const params = useParams();
-  const urlTicketId = Number(params.ticketId);
+  const numberizedUrlTicketId = Number(params.ticketId);
   // const dataTicketId = Number(data.id);
 
   useEffect(() => {
     readTicket(params.ticketId);
   }, [params.ticketId]);
 
-  // useEffect(() => {
-  //   const fetchTicket = async () => {
-  //     const docRef = doc(db, 'tickets', params.ticketId);
-
-  //     const docSnap = await getDoc(docRef);
-
-  //     if (docSnap.exists()) {
-  //       setTicket(docSnap.data());
-  //       console.log('first');
-  //     } else {
-  //       console.log('second');
-  //     }
-  //   };
-  //   fetchTicket();
-  // }, [params.ticketId]);
-
   const textAreaRef = useRef();
 
   const closeTicket = () => {
-    handleInputChange(urlTicketId, 'status', 'closed');
+    handleInputChange(numberizedUrlTicketId, 'status', 'closed');
+    updateTicket(params.ticketId, 'status', 'closed');
     history.push('/playground/tickets');
   };
-
-  // findInTickets(urlTicketId);
 
   if (loading) {
     return <Spinner />;
@@ -102,7 +75,7 @@ function TicketPage({ data }) {
             <Card
               scopeKey={scopeKeys.View_Loan}
               showHeader={true}
-              // title={`Ticket ID : #${ticket.id}`}
+              title={`Ticket ID : #${params.ticketId}`}
               xs={3}
               md={3}
               lg={3}
@@ -114,10 +87,10 @@ function TicketPage({ data }) {
               <InformationText
                 subtitle={
                   <select
-                    id={`status-${urlTicketId}`}
-                    // onChange={(e) => handleTicketStatusChange(Number(urlTicketId), e.target.value)}
+                    id={`status-${numberizedUrlTicketId}`}
+                    // onChange={(e) => handleTicketStatusChange(Number(numberizedUrlTicketId), e.target.value)}
                     onChange={(e) => {
-                      updateTicket(params.ticketId, e.target.value);
+                      updateTicket(params.ticketId, 'status', e.target.value);
                     }}
                     value={ticket.status}
                     required
@@ -144,12 +117,14 @@ function TicketPage({ data }) {
                     style={textareaStyle}
                     ref={textAreaRef}
                     name=""
-                    id={`note-${urlTicketId}`}
+                    id={`note-${numberizedUrlTicketId}`}
                     cols="40"
                     rows="6"
-                    value={ticket.note}
-                    onChange={(e) => handleInputChange(urlTicketId, 'note', e.target.value)}
-                    // onBlur={(e) => handleInputChange(urlTicketId, 'note', e.target.value)}
+                    // value={ticket.note}
+                    placeholder={ticket.note}
+                    // onChange={(event) => handleInputChange(numberizedUrlTicketId, 'note', event.target.value)}
+                    onChange={() => updateTicket(params.ticketId, 'note', textAreaRef.current.value)}
+                    // onBlur={(e) => updateTicket(params.ticketId, 'note', e.target.value)}
                   ></textarea>
                 }
                 title="Answer Message:"

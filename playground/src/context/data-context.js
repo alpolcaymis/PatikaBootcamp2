@@ -10,8 +10,6 @@ import { collection, getDocs, getDoc, addDoc, updateDoc, deleteDoc, doc } from '
 
 export const DataContextProvider = ({ children }) => {
   const [tickets, setTickets] = useState(initialTickets);
-  const [tickets2, setTickets2] = useState(null);
-  const [foundTicket, setFoundTicket] = useState({});
   const [ticket, setTicket] = useState(null);
 
   const ticketsCollectionRef = collection(db, 'tickets');
@@ -48,12 +46,13 @@ export const DataContextProvider = ({ children }) => {
     getTickets();
   }, []);
 
-  const updateTicket = async (id, value) => {
-    console.log('satus tupdate');
+  const updateTicket = async (id, fieldName, value) => {
+    console.log('Ticket updated!');
     const ticketDoc = doc(db, 'tickets', id);
     const newFields = {
-      status: value,
+      [fieldName]: value,
     };
+
     await updateDoc(ticketDoc, newFields);
   };
 
@@ -69,10 +68,6 @@ export const DataContextProvider = ({ children }) => {
 
   const handleAddTicket = (ticketObject) => {
     setTickets([...tickets, { ...ticketObject }]);
-  };
-
-  const findInTickets = (ticketID) => {
-    setFoundTicket(tickets.find((item) => item.id == ticketID));
   };
 
   const handleTicketStatusChange = (id, value) => {
@@ -93,6 +88,7 @@ export const DataContextProvider = ({ children }) => {
       return ticket;
     });
     setTickets(updatedTickets);
+    setTicket((prevTicket) => ({ ...prevTicket, [fieldName]: value }));
   };
 
   return (
@@ -104,13 +100,9 @@ export const DataContextProvider = ({ children }) => {
         handleTicketStatusChange,
         handleInputChange,
         handleDeleteTicket,
-        findInTickets,
-        foundTicket,
         createTicket,
         deleteTicket,
         readTicket,
-        tickets2,
-        setTickets2,
         updateTicket,
         ticket,
       }}
