@@ -11,15 +11,13 @@ import { collection, getDocs, getDoc, addDoc, updateDoc, deleteDoc, doc } from '
 export const DataContextProvider = ({ children }) => {
   console.log('data-context run');
 
-  const [tickets, setTickets] = useState(initialTickets);
+  const [tickets, setTickets] = useState(null);
   const [ticket, setTicket] = useState(null);
 
   const ticketsCollectionRef = collection(db, 'tickets');
 
   const createTicket = async (newTicket) => {
-    await addDoc(ticketsCollectionRef, {
-      newTicket,
-    });
+    await addDoc(ticketsCollectionRef, { ...newTicket });
   };
   const readTicket = useCallback((ticketId) => {
     const fetchTicket = async () => {

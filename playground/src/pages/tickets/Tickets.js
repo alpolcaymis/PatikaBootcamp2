@@ -65,7 +65,7 @@ function Tickets() {
           columns={columns}
           actionList={gridActionList}
           autoSizeAllColumns
-          idProperty="Id"
+          idProperty="id"
         />
       </Card>
     </BasePage>

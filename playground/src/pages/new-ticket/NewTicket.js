@@ -2,16 +2,13 @@ import React, { useEffect, useRef, useState, useMemo } from 'react';
 
 import { useTranslation, scopeKeys } from 'component/base';
 
-import { BasePage, Card, Checkbox, Input, Select, SelectEnum, DatePicker, withFormPage } from 'component/ui';
+import { BasePage, Card, Input, Select } from 'component/ui';
 
-import { withPage, PageHeader } from 'component/ui';
+import { withPage } from 'component/ui';
 import NavigationBar from '../../components/NavigationBar/NavigationBar';
 import { useHistory } from 'react-router-dom';
 import { Button, Box, GetIcon } from 'component/ui';
 import { useDataContext } from '../../context/data-context';
-
-import { db } from '../../firebase-config';
-import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
 
 const uiMetadata = {
   moduleName: 'playground',
@@ -19,23 +16,18 @@ const uiMetadata = {
 };
 
 function NewTicket() {
-  const { tickets, setTickets, handleAddTicket, createTicket } = useDataContext();
+  const { handleAddTicket, createTicket } = useDataContext();
 
   const { translate } = useTranslation();
-  const [dataModel, setDataModel] = useState({});
 
   const nameRef = useRef();
   const requestTypeRef = useRef();
   const requestMessageRef = useRef();
-  const isActiveRef = useRef(false);
 
   const history = useHistory();
 
-  const ticketsCollectionRef = collection(db, 'tickets');
-
   const handleSubmit = () => {
     const formData = {
-      // id: generateCustomId(),
       date: generateTimestamp(),
       name: nameRef.current.value,
       requestType: requestTypeRef.current.value,
@@ -48,18 +40,8 @@ function NewTicket() {
     history.push('/playground/tickets');
   };
 
-  const handleClick = () => {
-    // Navigate to a different route programmatically
-    history.push('/playground/tickets');
-  };
-
-  const generateCustomId = () => {
-    const random = Math.floor(Math.random() * 1000000);
-    return random;
-  };
   const generateTimestamp = () => {
     const timestamp = new Date().getTime();
-    // Create a new Date object with the timestamp
     var date = new Date(timestamp);
 
     // Extract the components of the date
@@ -70,13 +52,11 @@ function NewTicket() {
     var minutes = date.getMinutes();
     var seconds = date.getSeconds();
 
-    // Format the components as a string
     var formattedDateTime = day + '-' + month + '-' + year + ' ' + hours + ':' + minutes + ':' + seconds;
 
-    // Log or use the formatted date and time
-    console.log(formattedDateTime);
     return formattedDateTime;
   };
+
   const onActionClick = (action) => {
     if (action.commandName === 'Save') {
       handleSubmit();
