@@ -11,6 +11,7 @@ const uiMetadata = {
 };
 
 function SuccessTicket() {
+  console.log('<SuccessTicket/> ');
   const { lastCreatedTicketId } = useDataContext();
   const [shareLinkCopied, setShareLinkCopied] = useState(false);
   return (
@@ -18,17 +19,22 @@ function SuccessTicket() {
       <BasePage title="SuccessTicket">
         <NavigationBar />
         <Card scopeKey={scopeKeys.View_Loan}>
-          <Grid>
+          <Grid container direction="row" justifyContent="center" alignItems="center">
             <Typography align="center" variant="h2">
               Thanks for informing us
             </Typography>
+            <br />
+
             <Typography align="center" variant="h3">
               We recieved your request!
             </Typography>
-            <Typography align="center" variant="h4" margin="normal">
+            <br />
+
+            <Typography align="center" variant="h6" margin="normal">
               Here is your tracking code :
             </Typography>
-            <Typography align="center" variant="h5">
+            <br />
+            <Typography align="center" variant="h4">
               <code
                 className=""
                 onClick={() => {
@@ -42,32 +48,17 @@ function SuccessTicket() {
                 {lastCreatedTicketId}
               </code>
             </Typography>
-
-            <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+            <Typography align="center" variant="h2" xs={4}>
               <InputGenerator
                 disabledGenerateIcon={{}}
                 generateStartCharacter={lastCreatedTicketId}
                 label="Code"
                 readOnly={{}}
-                xs={9}
+                xs={2}
               />
-            </Box>
-            <Typography align="center" variant="h6">
-              {/* <span
-                className=""
-                onClick={() => {
-                  navigator.clipboard.writeText(lastCreatedTicketId);
-                  setShareLinkCopied(true);
-                  setTimeout(() => {
-                    setShareLinkCopied(false);
-                  }, 2000);
-                }}
-              >
-                <img src={copyIcon} alt="" />
-              </span> */}
             </Typography>
           </Grid>
-          {shareLinkCopied && <Alert message="Fimple" severity="success" />}
+          {shareLinkCopied && <Alert message="Tracking Id Copied!" severity="success" />}
         </Card>
       </BasePage>
     </>

@@ -43,7 +43,7 @@ export const DataContextProvider = ({ children }) => {
   const readTickets = () => {
     const fetchTickets = async () => {
       try {
-        console.log('getTickets ran!');
+        console.log('getTickets function!');
         const data = await getDocs(ticketsCollectionRef);
         console.log(data);
         setTickets(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
@@ -71,6 +71,8 @@ export const DataContextProvider = ({ children }) => {
     readTickets();
   };
 
+  // tickets.map can be undefined
+  // ticket only can filled after navigating to <Tickets/>, that triggers fetch all tickets
   const handleInputChange = (id, fieldName, value) => {
     const updatedTickets = tickets.map((ticket) => {
       if (ticket.id == id) {

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import NavigationBar from '../../components/NavigationBar/NavigationBar';
 import Spinner from '../../components/Spinner/Spinner';
-import { withPage, InformationText, Card, Grid, Divider, BasePage, GetIcon, Button } from 'component/ui';
+import { withPage, InformationText, Card, Grid, Divider, BasePage, Box, GetIcon, Button } from 'component/ui';
 import { Link } from 'component/ui';
 
 import { scopeKeys } from 'component/base';
@@ -26,10 +26,11 @@ const uiMetadata = {
 };
 function TicketPage({ data }) {
   console.log('<TicketPage/>');
-  const history = useHistory();
-  const [loading, setLoading] = useState(true);
-
   const { handleInputChange, updateTicket, readTicket, ticket } = useDataContext();
+  const [loading, setLoading] = useState(true);
+  console.log('<TicketPage/> ticket => ', ticket);
+
+  const history = useHistory();
 
   const params = useParams();
   const numberizedUrlTicketId = Number(params.ticketId);
@@ -41,8 +42,6 @@ function TicketPage({ data }) {
     setLoading(false);
   }, [params.ticketId]);
 
-  console.log('<ticketPage> ticket: ', ticket);
-
   const textAreaRef = useRef();
 
   const closeTicket = () => {
@@ -51,92 +50,102 @@ function TicketPage({ data }) {
     history.push('/playground/tickets');
   };
 
-  if (loading) {
-    return <Spinner />;
-  }
+  // if (loading) {
+  //   return <Spinner />;
+  // }
 
   return (
     <BasePage title="TicketPage">
       <NavigationBar />
-      <Link hoverNoneUnderline uiKey={'u2u2u2u2u2u'}>
-        Back to Tickets
-      </Link>
 
-      {ticket && (
+      <Button variant="outlined">
+        <Link hoverNoneUnderline uiKey={'u2u2u2u2u2u'}>
+          Back to Tickets
+        </Link>
+      </Button>
+
+      {ticket ? (
         <>
-          <Grid>
-            <Card
-              scopeKey={scopeKeys.View_Loan}
-              showHeader={true}
-              title={`Ticket ID : #${params.ticketId}`}
-              xs={3}
-              md={3}
-              lg={3}
-            >
-              <InformationText subtitle={ticket.name} title="Name:" />
-              <Divider light orientation="horizontal" variant="middle" />
-              <InformationText subtitle={ticket.date} title="Date:" />
-              <InformationText subtitle={ticket.requestType} title="Request Type:" />
-              <InformationText
-                subtitle={
-                  <select
-                    id={`status-${numberizedUrlTicketId}`}
-                    // onChange={(e) => handleTicketStatusChange(Number(numberizedUrlTicketId), e.target.value)}
-                    // onChange={(e) => {
-                    //   updateTicket(params.ticketId, 'status', e.target.value);
-                    // }}
-                    onChange={(e) => {
-                      handleInputChange(params.ticketId, 'status', e.target.value);
-                      updateTicket(params.ticketId, 'status', e.target.value);
-                    }}
-                    value={ticket.status}
-                    required
+          <Card scopeKey="Public">
+            <Box sx={{ flexGrow: 1 }}>
+              <Grid container spacing={2}>
+                <Grid item xs={6} md={4}>
+                  <Card
+                    scopeKey="Public"
+                    variant="outlined"
+                    showHeader={true}
+                    title={`Ticket ID : #${params.ticketId}`}
                   >
-                    <option value="new">new</option>
-                    <option value="open">open</option>
-                    <option value="closed">closed</option>
-                    <option value="on-hold">on hold </option>
-                  </select>
-                }
-                title="Status:"
-              />
-            </Card>
+                    <InformationText subtitle={ticket.name} title="Name:" />
+                    <Divider light orientation="horizontal" variant="middle" />
+                    <InformationText subtitle={ticket.date} title="Date:" />
+                    <InformationText subtitle={ticket.requestType} title="Request Type:" />
+                    <InformationText
+                      subtitle={
+                        <select
+                          id={`status-${numberizedUrlTicketId}`}
+                          onChange={(e) => {
+                            handleInputChange(params.ticketId, 'status', e.target.value);
+                            updateTicket(params.ticketId, 'status', e.target.value);
+                          }}
+                          value={ticket.status}
+                          required
+                        >
+                          <option value="new">new</option>
+                          <option value="open">open</option>
+                          <option value="closed">closed</option>
+                          <option value="on-hold">on hold </option>
+                        </select>
+                      }
+                      title="Status:"
+                    />
+                  </Card>
+                </Grid>
+                <Grid item xs={6} md={8}>
+                  <Card scopeKey="Public" variant="outlined">
+                    <InformationText subtitle={ticket.requestMessage} title="Request Message:" />
+                  </Card>
+                </Grid>
 
-            <Card scopeKey={scopeKeys.View_Loan} xs={5} md={5} lg={5}>
-              <Card scopeKey="Public" variant="outlined">
-                <InformationText subtitle={ticket.requestMessage} title="Request Message:" />
-              </Card>
-            </Card>
-            <Card scopeKey={scopeKeys.View_Loan} showHeader={true} title="Reply the request" xs={5}>
-              <InformationText
-                subtitle={
-                  <textarea
-                    style={textareaStyle}
-                    ref={textAreaRef}
-                    name=""
-                    id={`note-${numberizedUrlTicketId}`}
-                    cols="40"
-                    rows="6"
-                    placeholder={ticket.note}
-                    value={ticket.note}
-                    onChange={(e) => handleInputChange(numberizedUrlTicketId, 'note', e.target.value)}
-                    onBlur={() => updateTicket(params.ticketId, 'note', textAreaRef.current.value)}
-                  ></textarea>
-                }
-                title="Answer Message:"
-              />
-              <Button
-                component="label"
-                variant="contained"
-                startIcon={<GetIcon icon={'pushPin'} />}
-                sx={{ marginRight: '1rem', color: 'white', backgroundColor: 'red' }}
-                onClick={() => closeTicket()}
-              >
-                Save & Close Ticket
-              </Button>
-            </Card>
-          </Grid>
+                <Grid item xs={6} md={4}>
+                  <br />
+                </Grid>
+                <Grid item xs={6} md={8}>
+                  <Card scopeKey={scopeKeys.View_Loan} showHeader={true} title="Reply the request" variant="outlined">
+                    <InformationText
+                      subtitle={
+                        <textarea
+                          style={textareaStyle}
+                          ref={textAreaRef}
+                          name=""
+                          id={`note-${numberizedUrlTicketId}`}
+                          cols="40"
+                          rows="6"
+                          placeholder={ticket.note}
+                          value={ticket.note}
+                          onChange={(e) => handleInputChange(numberizedUrlTicketId, 'note', e.target.value)}
+                          onBlur={() => updateTicket(params.ticketId, 'note', textAreaRef.current.value)}
+                        ></textarea>
+                      }
+                      title="Answer Message:"
+                    />
+                    <Button
+                      component="label"
+                      variant="contained"
+                      startIcon={<GetIcon icon={'pushPin'} />}
+                      sx={{ marginRight: '1rem', color: 'white', backgroundColor: 'red' }}
+                      onClick={() => closeTicket()}
+                    >
+                      Save & Close Ticket
+                    </Button>
+                  </Card>
+                </Grid>
+              </Grid>
+            </Box>
+          </Card>
         </>
+      ) : (
+        <Spinner />
       )}
     </BasePage>
   );

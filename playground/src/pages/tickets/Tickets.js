@@ -5,6 +5,7 @@ import { useTranslation, useFormManagerContext, scopeKeys } from 'component/base
 import { useHistory } from 'react-router-dom';
 
 import { useDataContext } from '../../context/data-context';
+import Spinner from '../../components/Spinner/Spinner';
 
 const uiMetadata = {
   moduleName: 'playground',
@@ -12,13 +13,16 @@ const uiMetadata = {
 };
 
 function Tickets() {
-  console.log('<Tickets> run');
+  console.log('<Tickets/> ');
   const { tickets, deleteTicket, readTickets } = useDataContext();
+  const [loading, setLoading] = useState(true);
+
   const history = useHistory();
 
   useEffect(() => {
-    console.log('readTickets');
+    setLoading(true);
     readTickets();
+    setLoading(false);
   }, []);
 
   const editClicked = (id, data) => {
@@ -58,6 +62,10 @@ function Tickets() {
       { name: 'note', header: 'note', defaultFlex: 1, minWidth: 50 },
     ];
   }, []);
+
+  if (loading) {
+    return <Spinner />;
+  }
 
   return (
     <BasePage title="Tickets">

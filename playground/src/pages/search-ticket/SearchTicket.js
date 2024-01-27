@@ -12,6 +12,7 @@ const uiMetadata = {
 };
 
 function SearchTicket() {
+  console.log('<SuccessTicket />');
   const input = useRef();
   const history = useHistory();
 
