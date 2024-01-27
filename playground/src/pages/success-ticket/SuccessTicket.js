@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { withPage, BasePage } from 'component/ui';
+import { withPage, BasePage, Alert, Card, InputGenerator, Typography, Grid, Box } from 'component/ui';
 import NavigationBar from '../../components/NavigationBar/NavigationBar';
 import { useDataContext } from '../../context/data-context';
 import copyIcon from '../../assets/svg/copy.svg';
+import { scopeKeys } from 'component/base';
 
 const uiMetadata = {
   moduleName: 'playground',
@@ -16,12 +17,18 @@ function SuccessTicket() {
     <>
       <BasePage title="SuccessTicket">
         <NavigationBar />
-        <div className="heading">
-          <h1>Thank you</h1>
-          <h3>We recieved your application!</h3>
-          <div>
-            <p className=""> Here is your CODE : </p>
-            <div className="">
+        <Card scopeKey={scopeKeys.View_Loan}>
+          <Grid>
+            <Typography align="center" variant="h2">
+              Thanks for informing us
+            </Typography>
+            <Typography align="center" variant="h3">
+              We recieved your request!
+            </Typography>
+            <Typography align="center" variant="h4" margin="normal">
+              Here is your tracking code :
+            </Typography>
+            <Typography align="center" variant="h5">
               <code
                 className=""
                 onClick={() => {
@@ -34,7 +41,19 @@ function SuccessTicket() {
               >
                 {lastCreatedTicketId}
               </code>
-              <span
+            </Typography>
+
+            <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+              <InputGenerator
+                disabledGenerateIcon={{}}
+                generateStartCharacter={lastCreatedTicketId}
+                label="Code"
+                readOnly={{}}
+                xs={9}
+              />
+            </Box>
+            <Typography align="center" variant="h6">
+              {/* <span
                 className=""
                 onClick={() => {
                   navigator.clipboard.writeText(lastCreatedTicketId);
@@ -45,12 +64,11 @@ function SuccessTicket() {
                 }}
               >
                 <img src={copyIcon} alt="" />
-              </span>
-            </div>
-          </div>
-
-          {shareLinkCopied && <p className="">Link Copied!</p>}
-        </div>
+              </span> */}
+            </Typography>
+          </Grid>
+          {shareLinkCopied && <Alert message="Fimple" severity="success" />}
+        </Card>
       </BasePage>
     </>
   );
