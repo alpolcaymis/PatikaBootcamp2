@@ -41,7 +41,7 @@ export const DataContextProvider = ({ children }) => {
 
   useEffect(() => {
     const getTickets = async () => {
-      console.log('getTickets run in useEffect');
+      console.log('getTickets ran!');
       const data = await getDocs(ticketsCollectionRef);
       console.log(data);
       setTickets(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));

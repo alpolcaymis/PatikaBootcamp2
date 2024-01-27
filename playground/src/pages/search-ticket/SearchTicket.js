@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { withPage } from 'component/ui';
 import NavigationBar from '../../components/NavigationBar/NavigationBar';
 
+import { useRef } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Link } from 'component/ui';
 
 const uiMetadata = {
@@ -10,13 +12,30 @@ const uiMetadata = {
 };
 
 function SearchTicket() {
+  const input = useRef();
+  const history = useHistory();
+
   return (
     <>
-      <h1>SearchTicket</h1>
       <NavigationBar />
-      {/* <Link hoverNoneUnderline uiKey={'u5u5u5u5u5u'}>
-        TicketList-Link(component/ui)
+      {/* <Link hoverNoneUnderline uiKey={'u8u8u8u8u8u'}>
+        Back to Success
       </Link> */}
+      <div>
+        <h1>SearchTicket</h1>
+        <div className="">
+          <input ref={input} type="text" placeholder="enter your code ticket ID" required />
+          <button
+            className=""
+            onClick={() => {
+              input.current.value !== '' ? history.push(`/playground/ticket-page/${input.current.value}`) : null;
+              // toast.error('please enter given ticket ID code');
+            }}
+          >
+            Search
+          </button>
+        </div>
+      </div>
     </>
   );
 }
