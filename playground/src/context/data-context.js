@@ -16,9 +16,9 @@ export const DataContextProvider = ({ children }) => {
 
   const ticketsCollectionRef = collection(db, 'tickets');
 
-  const createTicket = async (formData2) => {
+  const createTicket = async (newTicket) => {
     await addDoc(ticketsCollectionRef, {
-      formData2,
+      newTicket,
     });
   };
   const readTicket = useCallback((ticketId) => {
@@ -54,7 +54,6 @@ export const DataContextProvider = ({ children }) => {
     const newFields = {
       [fieldName]: value,
     };
-
     await updateDoc(ticketDoc, newFields);
   };
 
@@ -72,19 +71,10 @@ export const DataContextProvider = ({ children }) => {
     setTickets([...tickets, { ...ticketObject }]);
   };
 
-  const handleTicketStatusChange = (id, value) => {
-    const updatedTickets = tickets.map((ticket) => {
-      if (ticket.id === id) {
-        return { ...ticket, status: value };
-      }
-      return ticket;
-    });
-    setTickets(updatedTickets);
-  };
-
   const handleInputChange = (id, fieldName, value) => {
     const updatedTickets = tickets.map((ticket) => {
-      if (ticket.id === id) {
+      if (ticket.id == id) {
+        console.log('handleInputChange: bulunan id', ticket.id);
         return { ...ticket, [fieldName]: value };
       }
       return ticket;
@@ -99,7 +89,6 @@ export const DataContextProvider = ({ children }) => {
         tickets,
         setTickets,
         handleAddTicket,
-        handleTicketStatusChange,
         handleInputChange,
         handleDeleteTicket,
         createTicket,
@@ -113,33 +102,3 @@ export const DataContextProvider = ({ children }) => {
     </DataContext.Provider>
   );
 };
-
-// const initialTickets = [
-//   {
-//     id: 123,
-//     date: '22-01-2024',
-//     name: 'CTO Cihan Yıldız',
-//     status: 'new',
-//     requestType: 'Problem',
-//     requestMessage: "Skype doesn't work!",
-//     note: 'message',
-//   },
-//   {
-//     id: 456,
-//     date: '22-01-2024',
-//     name: 'Erhan Akkaya',
-//     status: 'new',
-//     requestType: 'Problem',
-//     requestMessage: "Skype doesn't work!",
-//     note: 'message',
-//   },
-//   {
-//     id: 789,
-//     date: '22-01-2024',
-//     name: 'Ceyhan',
-//     status: 'closed',
-//     requestType: 'Problem',
-//     requestMessage: "Skype doesn't work!",
-//     note: 'message',
-//   },
-// ];

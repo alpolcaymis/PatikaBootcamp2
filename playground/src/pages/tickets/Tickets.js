@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState, useCallback } from 'react';
 import NavigationBar from '../../components/NavigationBar/NavigationBar';
-import { Link } from 'react-router-dom';
 import { withPage, DataGrid, Card, BasePage } from 'component/ui';
 import { useTranslation, useFormManagerContext, scopeKeys } from 'component/base';
 import { useHistory } from 'react-router-dom';
@@ -14,9 +13,7 @@ const uiMetadata = {
 
 function Tickets() {
   console.log('<Tickets> run');
-  const { translate } = useTranslation();
   const { tickets, handleDeleteTicket, deleteTicket } = useDataContext();
-  const { showDialog } = useFormManagerContext();
   const history = useHistory();
 
   const editClicked = (id, data) => {

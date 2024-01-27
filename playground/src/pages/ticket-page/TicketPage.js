@@ -1,27 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import NavigationBar from '../../components/NavigationBar/NavigationBar';
 import Spinner from '../../components/Spinner/Spinner';
-import {
-  withPage,
-  PageHeader,
-  ActionBar,
-  InformationText,
-  Card,
-  InformationGrid,
-  Grid,
-  Divider,
-  Select,
-  BasePage,
-  GetIcon,
-  Button,
-} from 'component/ui';
+import { withPage, InformationText, Card, Grid, Divider, BasePage, GetIcon, Button } from 'component/ui';
 import { scopeKeys } from 'component/base';
 import { useHistory } from 'react-router-dom';
 
 import { useParams } from 'react-router-dom';
 import { useDataContext } from '../../context/data-context';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
-import { db } from '../../firebase-config';
 
 const textareaStyle = {
   boxSizing: 'border-box',
@@ -38,7 +23,7 @@ const uiMetadata = {
   uiKey: 'u6u6u6u6u6u',
 };
 function TicketPage({ data }) {
-  console.log('TicketPage run');
+  console.log('<TicketPage/>');
   const history = useHistory();
   const [loading, setLoading] = useState(true);
   const [shareLinkCopied, setShareLinkCopied] = useState(false);
@@ -55,7 +40,7 @@ function TicketPage({ data }) {
     setLoading(false);
   }, [params.ticketId]);
 
-  console.log('ticket: ', ticket);
+  console.log('<ticketPage> ticket: ', ticket);
 
   const textAreaRef = useRef();
 
@@ -94,7 +79,11 @@ function TicketPage({ data }) {
                   <select
                     id={`status-${numberizedUrlTicketId}`}
                     // onChange={(e) => handleTicketStatusChange(Number(numberizedUrlTicketId), e.target.value)}
+                    // onChange={(e) => {
+                    //   updateTicket(params.ticketId, 'status', e.target.value);
+                    // }}
                     onChange={(e) => {
+                      handleInputChange(params.ticketId, 'status', e.target.value);
                       updateTicket(params.ticketId, 'status', e.target.value);
                     }}
                     value={ticket.status}
