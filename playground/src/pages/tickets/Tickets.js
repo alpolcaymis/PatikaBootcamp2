@@ -13,8 +13,13 @@ const uiMetadata = {
 
 function Tickets() {
   console.log('<Tickets> run');
-  const { tickets, handleDeleteTicket, deleteTicket } = useDataContext();
+  const { tickets, deleteTicket, readTickets } = useDataContext();
   const history = useHistory();
+
+  useEffect(() => {
+    console.log('readTickets');
+    readTickets();
+  }, []);
 
   const editClicked = (id, data) => {
     data && history.push(`/playground/ticket-page/${data.id}`);
@@ -22,7 +27,6 @@ function Tickets() {
   };
 
   const deleteClicked = (id, data) => {
-    data && handleDeleteTicket(data.id);
     data && deleteTicket(data.id);
     console.log(data.id);
   };

@@ -26,9 +26,8 @@ function TicketPage({ data }) {
   console.log('<TicketPage/>');
   const history = useHistory();
   const [loading, setLoading] = useState(true);
-  const [shareLinkCopied, setShareLinkCopied] = useState(false);
 
-  const { handleTicketStatusChange, handleInputChange, updateTicket, readTicket, ticket } = useDataContext();
+  const { handleInputChange, updateTicket, readTicket, ticket } = useDataContext();
 
   const params = useParams();
   const numberizedUrlTicketId = Number(params.ticketId);
@@ -57,7 +56,6 @@ function TicketPage({ data }) {
   return (
     <BasePage title="TicketPage">
       <NavigationBar />
-      <h1>selam</h1>
 
       {ticket && (
         <>

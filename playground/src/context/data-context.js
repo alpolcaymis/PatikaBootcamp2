@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import { createContext, useState, useContext, useEffect } from 'react';
 export const DataContext = createContext();
 export const useDataContext = () => useContext(DataContext);
+import { toast } from 'react-toastify';
 
 // import { DUMMY_DATA as initialTickets } from '../dummy-data.js';
 
@@ -39,16 +40,20 @@ export const DataContextProvider = ({ children }) => {
     fetchTicket();
   }, []);
 
-  useEffect(() => {
-    const getTickets = async () => {
-      console.log('getTickets ran!');
-      const data = await getDocs(ticketsCollectionRef);
-      console.log(data);
-      setTickets(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+  const readTickets = () => {
+    const fetchTickets = async () => {
+      try {
+        console.log('getTickets ran!');
+        const data = await getDocs(ticketsCollectionRef);
+        console.log(data);
+        setTickets(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      } catch (error) {
+        // toast.error('Could not fetch tickets');
+      }
     };
 
-    getTickets();
-  }, []);
+    fetchTickets();
+  };
 
   const updateTicket = async (id, fieldName, value) => {
     console.log('Ticket updated!');
@@ -62,15 +67,8 @@ export const DataContextProvider = ({ children }) => {
   const deleteTicket = async (id) => {
     const ticketDoc = doc(db, 'tickets', id);
     await deleteDoc(ticketDoc);
-  };
-
-  const handleDeleteTicket = (id) => {
-    const updatedTickets = tickets.filter((ticket) => ticket.id !== id);
-    setTickets(updatedTickets);
-  };
-
-  const handleAddTicket = (ticketObject) => {
-    setTickets([...tickets, { ...ticketObject }]);
+    // fetch all tickets again after delete | need to optimized
+    readTickets();
   };
 
   const handleInputChange = (id, fieldName, value) => {
@@ -90,9 +88,8 @@ export const DataContextProvider = ({ children }) => {
       value={{
         tickets,
         setTickets,
-        handleAddTicket,
         handleInputChange,
-        handleDeleteTicket,
+
         createTicket,
         deleteTicket,
         readTicket,
@@ -100,6 +97,7 @@ export const DataContextProvider = ({ children }) => {
         ticket,
         setLastCreatedTicketId,
         lastCreatedTicketId,
+        readTickets,
       }}
     >
       {children}

@@ -16,7 +16,7 @@ const uiMetadata = {
 };
 
 function NewTicket() {
-  const { handleAddTicket, createTicket } = useDataContext();
+  const { createTicket } = useDataContext();
 
   const { translate } = useTranslation();
 
@@ -36,7 +36,6 @@ function NewTicket() {
       note: 'not answered',
     };
     createTicket(formData);
-    handleAddTicket(formData);
     history.push('/playground/success-ticket');
   };
 
