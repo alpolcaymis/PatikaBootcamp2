@@ -18,12 +18,14 @@ export const DataContextProvider = ({ children }) => {
 
   const ticketsCollectionRef = collection(db, 'tickets');
 
+  // CREATE
   const createTicket = async (newTicket) => {
     const docRef = await addDoc(ticketsCollectionRef, { ...newTicket });
 
     setLastCreatedTicketId(docRef.id);
     console.log('lastCreatedTicketId datacontext:', lastCreatedTicketId);
   };
+  // READ
   const readTicket = useCallback((ticketId) => {
     const fetchTicket = async () => {
       const docRef = doc(db, 'tickets', ticketId);
@@ -39,7 +41,7 @@ export const DataContextProvider = ({ children }) => {
     };
     fetchTicket();
   }, []);
-
+  // READ (single ticket)
   const readTickets = () => {
     const fetchTickets = async () => {
       try {
@@ -54,7 +56,7 @@ export const DataContextProvider = ({ children }) => {
 
     fetchTickets();
   };
-
+  // UPDATE
   const updateTicket = async (id, fieldName, value) => {
     console.log('Ticket updated!');
     const ticketDoc = doc(db, 'tickets', id);
@@ -63,7 +65,7 @@ export const DataContextProvider = ({ children }) => {
     };
     await updateDoc(ticketDoc, newFields);
   };
-
+  // DELETE
   const deleteTicket = async (id) => {
     const ticketDoc = doc(db, 'tickets', id);
     await deleteDoc(ticketDoc);
@@ -72,7 +74,7 @@ export const DataContextProvider = ({ children }) => {
   };
 
   // tickets.map can be undefined
-  // ticket only can filled after navigating to <Tickets/>, that triggers fetch all tickets
+  // ticket only could fulfilled after navigating to <Tickets/>, that triggers fetch all tickets
   const handleInputChange = (id, fieldName, value) => {
     const updatedTickets = tickets.map((ticket) => {
       if (ticket.id == id) {
@@ -88,18 +90,17 @@ export const DataContextProvider = ({ children }) => {
   return (
     <DataContext.Provider
       value={{
-        tickets,
         setTickets,
-        handleInputChange,
-
-        createTicket,
-        deleteTicket,
-        readTicket,
-        updateTicket,
+        tickets,
         ticket,
+        createTicket,
+        readTicket,
+        readTickets,
+        updateTicket,
+        handleInputChange,
+        deleteTicket,
         setLastCreatedTicketId,
         lastCreatedTicketId,
-        readTickets,
       }}
     >
       {children}

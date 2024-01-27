@@ -50,9 +50,9 @@ function TicketPage({ data }) {
     history.push('/playground/tickets');
   };
 
-  // if (loading) {
-  //   return <Spinner />;
-  // }
+  if (loading) {
+    return <Spinner />;
+  }
 
   return (
     <BasePage title="TicketPage">
@@ -64,7 +64,7 @@ function TicketPage({ data }) {
         </Link>
       </Button>
 
-      {ticket ? (
+      {ticket && (
         <>
           <Card scopeKey="Public">
             <Box sx={{ flexGrow: 1 }}>
@@ -144,8 +144,6 @@ function TicketPage({ data }) {
             </Box>
           </Card>
         </>
-      ) : (
-        <Spinner />
       )}
     </BasePage>
   );
