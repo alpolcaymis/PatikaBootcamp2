@@ -5,6 +5,7 @@ import { NotFound } from 'component/ui';
 const Tickets = lazy(() => import('./pages/tickets/Tickets'));
 const NewTicket = lazy(() => import('./pages/new-ticket/NewTicket'));
 const TicketPage = lazy(() => import('./pages/ticket-page/TicketPage'));
+const TicketInfo = lazy(() => import('./pages/ticket-info/TicketInfo'));
 const SuccessTicket = lazy(() => import('./pages/success-ticket/SuccessTicket'));
 const SearchTicket = lazy(() => import('./pages/search-ticket/SearchTicket'));
 
@@ -29,6 +30,13 @@ export default [
     path: '/ticket-page/:ticketId',
     component: TicketPage,
     uiKey: 'u6u6u6u6u6u',
+  },
+  {
+    name: 'TicketInfo',
+    module: '/playground',
+    path: '/ticket-info/:ticketId',
+    component: TicketInfo,
+    uiKey: 'u7u7u7u7u7u',
   },
   {
     name: 'SuccessTicket',

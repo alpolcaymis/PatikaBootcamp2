@@ -28,7 +28,7 @@ function SearchTicket() {
           <button
             className=""
             onClick={() => {
-              input.current.value !== '' ? history.push(`/playground/ticket-page/${input.current.value}`) : null;
+              input.current.value !== '' ? history.push(`/playground/ticket-info/${input.current.value}`) : null;
               // toast.error('please enter given ticket ID code');
             }}
           >
