@@ -59,7 +59,7 @@ function Tickets() {
       { name: 'name', header: 'Name', defaultFlex: 1, minWidth: 50 },
       { name: 'status', header: 'Status', defaultFlex: 1, minWidth: 50 },
       { name: 'date', header: 'Date', defaultFlex: 1, minWidth: 50 },
-      { name: 'note', header: 'note', defaultFlex: 1, minWidth: 50 },
+      { name: 'note', header: 'Answer', defaultFlex: 1, minWidth: 50 },
     ];
   }, []);
 

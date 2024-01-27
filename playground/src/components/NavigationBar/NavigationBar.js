@@ -30,15 +30,7 @@ function NavigationBar() {
     () => (
       <div>
         <Box sx={{ padding: '1px 4px' }}>
-          <Tabs value={value} variant="fullWidth" aria-label="wrapped label tabs example" onChange={handleChange}>
-            <Tab
-              className={classes.li}
-              onClick={() => {
-                history.push('/playground/search-ticket');
-              }}
-              label="Search Ticket"
-              {...a11yProps(0)}
-            />
+          <Tabs value={undefined} variant="fullWidth" aria-label="wrapped label tabs example" onChange={handleChange}>
             <Tab
               className={classes.li}
               onClick={() => {
@@ -47,6 +39,15 @@ function NavigationBar() {
               label="Create Ticket"
               {...a11yProps(1)}
             />
+            <Tab
+              className={classes.li}
+              onClick={() => {
+                history.push('/playground/search-ticket');
+              }}
+              label="Search Ticket"
+              {...a11yProps(0)}
+            />
+
             <Tab
               className={classes.li}
               onClick={() => {

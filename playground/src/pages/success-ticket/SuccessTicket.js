@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { withPage, BasePage, Alert, Card, InputGenerator, Typography, Grid, Box } from 'component/ui';
+import { withPage, BasePage, Alert, Card, InputGenerator, Typography, Grid, CircularProgress, Box } from 'component/ui';
 import NavigationBar from '../../components/NavigationBar/NavigationBar';
 import { useDataContext } from '../../context/data-context';
 import copyIcon from '../../assets/svg/copy.svg';
@@ -34,27 +34,33 @@ function SuccessTicket() {
               Here is your tracking code :
             </Typography>
             <br />
+
             <Typography align="center" variant="h4">
-              <code
-                className=""
-                onClick={() => {
-                  navigator.clipboard.writeText(lastCreatedTicketId);
-                  setShareLinkCopied(true);
-                  setTimeout(() => {
-                    setShareLinkCopied(false);
-                  }, 2000);
-                }}
-              >
-                {lastCreatedTicketId}
-              </code>
+              {!lastCreatedTicketId ? (
+                <CircularProgress color="inherit" size={40} thickness={3.6} />
+              ) : (
+                <code
+                  className=""
+                  onClick={() => {
+                    navigator.clipboard.writeText(lastCreatedTicketId);
+                    setShareLinkCopied(true);
+                    setTimeout(() => {
+                      setShareLinkCopied(false);
+                    }, 2000);
+                  }}
+                >
+                  {lastCreatedTicketId}
+                </code>
+              )}
             </Typography>
             <Typography align="center" variant="h2" xs={4}>
               <InputGenerator
-                disabledGenerateIcon={{}}
-                generateStartCharacter={lastCreatedTicketId}
+                disabledGenerateIcon={true}
                 label="Code"
-                readOnly={{}}
-                xs={2}
+                readOnly={true}
+                codeLength={20}
+                value={lastCreatedTicketId}
+                onClick={() => navigator.clipboard.writeText(lastCreatedTicketId)}
               />
             </Typography>
           </Grid>

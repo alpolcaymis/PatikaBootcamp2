@@ -52,6 +52,13 @@ export default [
     component: SearchTicket,
     uiKey: 'u9u9u9u9u9u',
   },
+  {
+    name: 'SearchTicket',
+    module: '/playground',
+    path: '/sample-list',
+    component: SearchTicket,
+    uiKey: 'u9u9u9u9u9u',
+  },
 
   {
     name: 'NotFound',
