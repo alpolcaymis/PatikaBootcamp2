@@ -3,21 +3,25 @@ import { createContext, useState, useContext, useEffect } from 'react';
 export const DataContext = createContext();
 export const useDataContext = () => useContext(DataContext);
 
-import { DUMMY_DATA as initialTickets } from '../dummy-data.js';
+// import { DUMMY_DATA as initialTickets } from '../dummy-data.js';
 
 import { db } from '../firebase-config';
 import { collection, getDocs, getDoc, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
 
 export const DataContextProvider = ({ children }) => {
-  console.log('data-context run');
+  console.log('<data-context/>');
 
   const [tickets, setTickets] = useState(null);
   const [ticket, setTicket] = useState(null);
+  const [lastCreatedTicketId, setLastCreatedTicketId] = useState('');
 
   const ticketsCollectionRef = collection(db, 'tickets');
 
   const createTicket = async (newTicket) => {
-    await addDoc(ticketsCollectionRef, { ...newTicket });
+    const docRef = await addDoc(ticketsCollectionRef, { ...newTicket });
+
+    setLastCreatedTicketId(docRef.id);
+    console.log('lastCreatedTicketId datacontext:', lastCreatedTicketId);
   };
   const readTicket = useCallback((ticketId) => {
     const fetchTicket = async () => {
@@ -94,6 +98,8 @@ export const DataContextProvider = ({ children }) => {
         readTicket,
         updateTicket,
         ticket,
+        setLastCreatedTicketId,
+        lastCreatedTicketId,
       }}
     >
       {children}
