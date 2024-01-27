@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import NavigationBar from '../../components/NavigationBar/NavigationBar';
 import Spinner from '../../components/Spinner/Spinner';
-import { withPage, InformationText, Card, Grid, Divider, BasePage, GetIcon, Button } from 'component/ui';
+import { withPage, InformationText, Card, Grid, Divider, BasePage, Button, Typography } from 'component/ui';
 import { scopeKeys } from 'component/base';
 import { useHistory } from 'react-router-dom';
-
 import { useParams } from 'react-router-dom';
 import { useDataContext } from '../../context/data-context';
+import { Link } from 'component/ui';
 
 const textareaStyle = {
   boxSizing: 'border-box',
@@ -42,15 +42,17 @@ function TicketInfo({ data }) {
 
   const textAreaRef = useRef();
 
-  if (loading) {
-    return <Spinner />;
-  }
+  // if (loading) {
+  //   return <Spinner />;
+  // }
 
   return (
     <BasePage title="TicketInfo">
       <NavigationBar />
 
-      {ticket && (
+      {loading ? (
+        <Spinner />
+      ) : ticket ? (
         <>
           <Grid>
             <Card
@@ -102,6 +104,17 @@ function TicketInfo({ data }) {
               />
             </Card>
           </Grid>
+        </>
+      ) : (
+        <>
+          <Button variant="outlined">
+            <Link hoverNoneUnderline uiKey={'u9u9u9u9u9u'}>
+              🔙 Back to Search Ticket
+            </Link>
+          </Button>
+          <Typography align="center" variant="h2">
+            😥 No tickets for searched Id: {params.ticketId}
+          </Typography>
         </>
       )}
     </BasePage>

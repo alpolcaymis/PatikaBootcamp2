@@ -18,6 +18,7 @@ const textareaStyle = {
   fontSize: '16px',
   color: '#333',
   padding: '10px',
+  borderRadius: '6px',
 };
 
 const uiMetadata = {

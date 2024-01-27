@@ -8,7 +8,7 @@ import Box from '@mui/material/Box';
 import { useHistory } from 'react-router-dom';
 
 function NavigationBar() {
-  //value index problem need to fix
+  // value index problem need to fix
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
@@ -36,7 +36,7 @@ function NavigationBar() {
               onClick={() => {
                 history.push('/playground/search-ticket');
               }}
-              label="search Ticket"
+              label="Search Ticket"
               {...a11yProps(0)}
             />
             <Tab
@@ -44,7 +44,7 @@ function NavigationBar() {
               onClick={() => {
                 history.push('/playground/new-ticket');
               }}
-              label="new Ticket"
+              label="Create Ticket"
               {...a11yProps(1)}
             />
             <Tab
