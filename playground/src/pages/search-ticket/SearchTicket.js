@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { withPage } from 'component/ui';
+import { withPage, BasePage, Card } from 'component/ui';
 import NavigationBar from '../../components/NavigationBar/NavigationBar';
 
 import { useRef } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Link } from 'component/ui';
+import { scopeKeys } from 'component/base';
 
 const uiMetadata = {
   moduleName: 'playground',
@@ -15,27 +15,32 @@ function SearchTicket() {
   const input = useRef();
   const history = useHistory();
 
+  const handleNavigate = () => {
+    input.current.value !== '' ? history.push(`/playground/ticket-info/${input.current.value}`) : null;
+    // toast.error('please enter given ticket ID code');
+  };
+
   return (
     <>
-      <NavigationBar />
-      {/* <Link hoverNoneUnderline uiKey={'u8u8u8u8u8u'}>
-        Back to Success
-      </Link> */}
-      <div>
-        <h1>SearchTicket</h1>
-        <div className="">
-          <input ref={input} type="text" placeholder="enter your code ticket ID" required />
-          <button
-            className=""
-            onClick={() => {
-              input.current.value !== '' ? history.push(`/playground/ticket-info/${input.current.value}`) : null;
-              // toast.error('please enter given ticket ID code');
-            }}
-          >
-            Search
-          </button>
-        </div>
-      </div>
+      <BasePage title="Search Ticket">
+        <NavigationBar />
+        <Card scopeKey={scopeKeys.View_Loan} showHeader={true}>
+          <div>
+            <h1>SearchTicket</h1>
+            <div className="">
+              <input ref={input} type="text" placeholder="enter your code ticket ID" required />
+              <button
+                className=""
+                onClick={() =>
+                  input.current.value !== '' ? history.push(`/playground/ticket-info/${input.current.value}`) : null
+                }
+              >
+                Search
+              </button>
+            </div>
+          </div>
+        </Card>
+      </BasePage>
     </>
   );
 }

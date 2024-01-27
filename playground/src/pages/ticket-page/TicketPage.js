@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import NavigationBar from '../../components/NavigationBar/NavigationBar';
 import Spinner from '../../components/Spinner/Spinner';
 import { withPage, InformationText, Card, Grid, Divider, BasePage, GetIcon, Button } from 'component/ui';
+import { Link } from 'component/ui';
+
 import { scopeKeys } from 'component/base';
 import { useHistory } from 'react-router-dom';
 
@@ -56,6 +58,9 @@ function TicketPage({ data }) {
   return (
     <BasePage title="TicketPage">
       <NavigationBar />
+      <Link hoverNoneUnderline uiKey={'u2u2u2u2u2u'}>
+        Back to Tickets
+      </Link>
 
       {ticket && (
         <>

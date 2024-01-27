@@ -27,11 +27,10 @@ function TicketInfo({ data }) {
   const history = useHistory();
   const [loading, setLoading] = useState(true);
 
-  const { handleInputChange, updateTicket, readTicket, ticket } = useDataContext();
+  const { readTicket, ticket } = useDataContext();
 
   const params = useParams();
   const numberizedUrlTicketId = Number(params.ticketId);
-  // const dataTicketId = Number(data.id);
 
   useEffect(() => {
     setLoading(true);
@@ -42,12 +41,6 @@ function TicketInfo({ data }) {
   console.log('<TicketInfo> ticket: ', ticket);
 
   const textAreaRef = useRef();
-
-  const closeTicket = () => {
-    handleInputChange(numberizedUrlTicketId, 'status', 'closed');
-    updateTicket(params.ticketId, 'status', 'closed');
-    history.push('/playground/tickets');
-  };
 
   if (loading) {
     return <Spinner />;
@@ -74,19 +67,7 @@ function TicketInfo({ data }) {
               <InformationText subtitle={ticket.requestType} title="Request Type:" />
               <InformationText
                 subtitle={
-                  <select
-                    id={`status-${numberizedUrlTicketId}`}
-                    // onChange={(e) => handleTicketStatusChange(Number(numberizedUrlTicketId), e.target.value)}
-                    // onChange={(e) => {
-                    //   updateTicket(params.ticketId, 'status', e.target.value);
-                    // }}
-                    onChange={(e) => {
-                      handleInputChange(params.ticketId, 'status', e.target.value);
-                      updateTicket(params.ticketId, 'status', e.target.value);
-                    }}
-                    value={ticket.status}
-                    required
-                  >
+                  <select id={`status-${numberizedUrlTicketId}`} value={ticket.status} disabled>
                     <option value="new">new</option>
                     <option value="open">open</option>
                     <option value="closed">closed</option>
@@ -102,7 +83,7 @@ function TicketInfo({ data }) {
                 <InformationText subtitle={ticket.requestMessage} title="Request Message:" />
               </Card>
             </Card>
-            <Card scopeKey={scopeKeys.View_Loan} showHeader={true} title="Reply the request" xs={5}>
+            <Card scopeKey={scopeKeys.View_Loan} showHeader={true} title="Answer Message" xs={5}>
               <InformationText
                 subtitle={
                   <textarea
@@ -114,21 +95,11 @@ function TicketInfo({ data }) {
                     rows="6"
                     placeholder={ticket.note}
                     value={ticket.note}
-                    onChange={(e) => handleInputChange(numberizedUrlTicketId, 'note', e.target.value)}
-                    onBlur={() => updateTicket(params.ticketId, 'note', textAreaRef.current.value)}
+                    disabled
                   ></textarea>
                 }
                 title="Answer Message:"
               />
-              <Button
-                component="label"
-                variant="contained"
-                startIcon={<GetIcon icon={'pushPin'} />}
-                sx={{ marginRight: '1rem', color: 'white', backgroundColor: 'red' }}
-                onClick={() => closeTicket()}
-              >
-                Save & Close Ticket
-              </Button>
             </Card>
           </Grid>
         </>
