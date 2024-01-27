@@ -37,7 +37,7 @@ function NewTicket() {
     };
     createTicket(formData);
     handleAddTicket(formData);
-    history.push('/playground/tickets');
+    history.push('/playground/success-ticket');
   };
 
   const generateTimestamp = () => {

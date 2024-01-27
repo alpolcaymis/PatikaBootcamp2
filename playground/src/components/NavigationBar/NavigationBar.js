@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ActionBar, Grid } from 'component/ui';
 import classes from './NavigationBar.module.css';
 
 import Tabs from '@mui/material/Tabs';
@@ -19,10 +18,9 @@ function NavigationBar() {
     <>
       <Box sx={{ padding: '1px 4px' }}>
         <Tabs value={value} onChange={handleChange} variant="fullWidth" aria-label="wrapped label tabs example">
-          <Tab className={classes.li} label={<Link to="/playground/adana-page">Adana PAge</Link>} />
           <Tab className={classes.li} label={<Link to="/playground/new-ticket">New Ticket</Link>} />
+          <Tab className={classes.li} label={<Link to="/playground/search-ticket">Search Ticket</Link>} />
           <Tab className={classes.li} label={<Link to="/playground/tickets">Tickets</Link>} />
-          <Tab className={classes.li} label={<Link to="/playground/ticket-page/123">Ticket Page</Link>} />
         </Tabs>
       </Box>
     </>
